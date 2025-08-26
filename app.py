@@ -53,17 +53,14 @@ st.write("### Editable Periods")
 st.dataframe(df_output,hide_index=True)
 
 def comprehend(mystring):
-    
-    data_list=mystring.replace(" ", "")
     data=[]
-    
     try:
+        data_list=mystring.replace(" ", "")
         data_list=mystring.split(":")
         for num in data_list:
             data.append(int(num))
     except:
         return None
-
     return tuple(data)
 
 def try_int(mystring):
