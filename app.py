@@ -1,8 +1,203 @@
-import numpy as np
 import pandas as pd
-import re
-import statistics as stat
 import streamlit as st
+from datetime import time
+
+def timesum(time1,time2):
+    hrsum=(time1[0]+time2[0]) % 24
+    minsum=time1[1]+time2[1]
+    if minsum >= 60:
+        hrsum+=minsum//60
+    return (hrsum%24,minsum%60)
+
+def timediff(time1,time2):
+    hrdiff=time1[0]-time2[0]
+    mindiff=time1[1]-time2[1]
+    if mindiff<0:
+        hrs_in_mindiff=-mindiff//60
+        hrdiff-=1+hrs_in_mindiff
+        mindiff=60-(-mindiff)%60
+    if hrdiff<0:
+        hrdiff+=1
+        mindiff = -(60-mindiff)
+    return (hrdiff,mindiff)
+
+def minutes(time):
+    return(time[1]+60*time[0])
+
+def overlap(inv1,inv2):
+
+    if all([num>=0 for num in timediff(inv1[0],inv2[0])]):
+        if any([num<0 for num in timediff(inv1[0],inv2[1])]):
+            return True
+    if all([num>=0 for num in timediff(inv2[0],inv1[0])]):
+        if any([num<0 for num in timediff(inv2[0],inv1[1])]):
+            return True
+
+    return False    
+
+def first_period(sched): # Periods must be non-overlapping!
+
+    min_index_hr=min([period["start"][0] for period in sched])
+    sched_min_hr=[]
+    for period in sched:
+        if period["start"][0]==min_index_hr:
+            sched_min_hr.append(period)
+    min_index_min=min([period["start"][1] for period in sched_min_hr])
+    for period in sched_min_hr:
+        if period["start"][1]==min_index_min:
+            return period
+
+def fill_blanks(reqs,sched): 
+
+    sched_filled=[]
+
+    for typ in reqs:
+        
+        sched_typ=[]
+        
+        for period in sched:
+            
+            if period["type"]==typ:
+                sched_typ.append(period.copy())
+                
+        for period in sched_typ:
+            
+            if period["start"]!=None and period["length"]==None and period["end"]!=None:
+                period["length"]=minutes(timediff(period["end"],period["start"]))
+            if period["start"]!=None and period["length"]!=None and period["end"]==None:
+                period["end"]=timesum(period["start"],(0,period["length"]))
+            if period["start"]==None and period["length"]!=None and period["end"]!=None:
+                period["start"]=timediff(period["end"],(0,period["length"]))
+
+        rem_req=reqs[typ]
+        j=0
+        for period in sched_typ:
+            if period["length"]!=None:
+                rem_req-=period["length"]
+                j+=1
+                
+        if rem_req<0:
+            print(f"Too many minutes allocated to the periods of type \'{typ}\'! Allocate {-rem_req} fewer minutes to periods of this type.")
+            return None
+
+        split_rest=False
+        if len(sched_typ) - j != 0 and rem_req>=0:
+            split_rest=True
+            length_rem_each=rem_req//(len(sched_typ) - j)
+            length_rem_diff=rem_req-length_rem_each*(len(sched_typ) - j)
+
+            if length_rem_diff==0 and rem_req>0:
+                print(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' evenly to the following periods:",[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)])
+            
+            if length_rem_diff!=0 and rem_req>0:
+                print(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods:",[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)])
+
+            #Need to create a list of these flexible periods...
+            sched_typ_flex=[period for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)]
+            for period in sched_typ_flex:
+                if period["start"]==None and period["length"]==None:
+                    period["length"]=0
+                    period["start"]= period["end"]
+                    period["init"]="end"
+                if period["end"]==None and period["length"]==None:
+                    period["length"]=0
+                    period["end"]= period["start"]
+                    period["init"]="start"
+
+            for i in range(rem_req):
+
+                if sched_typ_flex[i%len(sched_typ_flex)]["init"]=="start":
+                    sched_typ_flex[i%len(sched_typ_flex)]["length"]+=1
+                    sched_typ_flex[i%len(sched_typ_flex)]["end"]=timesum(sched_typ_flex[i%len(sched_typ_flex)]["end"],(0,1))
+
+                if sched_typ_flex[i%len(sched_typ_flex)]["init"]=="end":
+                    sched_typ_flex[i%len(sched_typ_flex)]["length"]+=1
+                    sched_typ_flex[i%len(sched_typ_flex)]["start"]=timediff(sched_typ_flex[i%len(sched_typ_flex)]["start"],(0,1))
+
+        if split_rest==False and rem_req>0:
+            print(f"Could not allocate the remaining {rem_req} minutes of period type \'{typ}\'! Add more periods of this type, or make more room for existing ones.")
+            
+        sched_filled+=sched_typ[:]
+
+
+    for period in sched_filled:
+        if "init" in period:
+            del period["init"]
+
+    return sched_filled
+
+                
+def validate(reqs,sched):
+
+    badperiods=[]
+    overlaps=set()
+    gaps=[]
+    sched_with_gaps=[]
+
+    # Check for badly formulated periods
+    for i in range(len(sched)):
+        try:
+            if any([j<0 for j in timediff( sched[i]["end"],sched[i]["start"] ) ]):
+                badperiods.append(sched[i]["name"])
+        except:
+            continue
+    if len(badperiods)!=0:
+        return "The following periods end before they start:",badperiods
+
+    # Logically fill blanks
+    sched_test=fill_blanks(reqs,sched[:])
+    if sched_test!=None:
+        sched=sched_test[:]
+    else:
+        return None
+
+    # Check for overlaps
+    for i in range (len(sched)):
+        for j in range(len(sched)):
+            if j!=i and overlap((sched[i]["start"],sched[i]["end"]),(sched[j]["start"],sched[j]["end"])):
+                overlaps=overlaps.union({sched[i]["name"]}.union({sched[j]["name"]}))
+
+    if len(overlaps)!=0:
+        print("Overlaps detected:",overlaps)
+
+    # Sort periods
+    sched_sorted=[]
+
+    while len(sched)!=0:
+        sched_sorted.append(first_period(sched))
+        sched.remove(first_period(sched))
+
+    sched=sched_sorted[:]
+
+    # Add gaps (if any), display overlaps (if any)
+    j=1
+    k=1
+    for i in range(len(sched)):
+        sched_with_gaps.append(sched[i])
+        if i<len(sched)-1 and sched[i+1]["start"]!=sched[i]["end"]:
+            gaps.append((sched[i]["end"],sched[i+1]["end"])) #
+            new_gap={"name":"Gap "+str(j),"type":"gap","start":sched[i]["end"],"length":60*timediff(sched[i+1]["start"],sched[i]["end"])[0]+timediff(sched[i+1]["start"],sched[i]["end"])[1],"end":sched[i+1]["start"]}
+            
+            if new_gap["length"]<0:
+                new_gap["name"]="Overlap "+str(k)
+                new_gap["type"]="overlap"
+                new_gap["start"]=sched[i+1]["start"]
+                new_gap["end"]=sched[i]["end"]
+                new_gap["length"]=-(60*timediff(sched[i+1]["start"],sched[i]["end"])[0]+timediff(sched[i+1]["start"],sched[i]["end"])[1])
+                j-=1
+                
+            sched_with_gaps_old=sched_with_gaps[:]
+            sched_with_gaps.append(new_gap)
+            
+            j+=1
+
+    if sched_with_gaps!=sched:
+        return sched_with_gaps
+
+    return sched
+
+
+
 
 st.title("Schedule Maker")
 st.markdown("A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
@@ -77,6 +272,14 @@ df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 for idx in df[["Start","Length (minutes)","End"]].index:
     if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all():
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
+        st.stop()
+
+reqs={}
+for el in set(df["Type"]):
+    newtype=st.text_input(f"Enter the total required number of minutes for periods of type {el}:")
+    reqs[el]=try_int(newtype.replace(" ",""))
+    if reqs[el]==None:
+        st.warning("Please enter a valid positive whole number!")
         st.stop()
 
 st.dataframe(df)
