@@ -229,7 +229,7 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
     st.stop()
 
-reqs=dict(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]).to_dict()
+reqs=zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]).to_dict()
 
 for el in reqs[el]:
     reqs[el]=try_int(newtype.replace(" ",""))
