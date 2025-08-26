@@ -15,6 +15,9 @@ st.set_page_config(
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End"])
 
+if "Ignore?" not in st.session_state.df_user.columns:
+    st.session_state.df_user["Ignore?"] = False
+
 df_user = st.session_state.df_user.copy()
 df_user["Ignore?"] = False 
 
