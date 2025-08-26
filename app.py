@@ -27,7 +27,7 @@ edited_df = st.data_editor(
 st.session_state.df_user[st.session_state.df_user["Ignore?"]==None]:
     st.session_state.df_user["Ignore?"] = False
 
-df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"] == None)].drop(columns=["Ignore?"])
+df_output=edited_df[(edited_df["Ignore?"] == False) | (pd.isna(edited_df["Ignore?"]))].drop(columns=["Ignore?"])
 st.write("### Editable Periods")
 st.dataframe(df_output,hide_index=True)
 
