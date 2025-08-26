@@ -231,7 +231,7 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
 
 reqs=dict(zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]))
 
-for el in reqs[el]:
+for el in reqs:
     reqs[el]=try_int(newtype.replace(" ",""))
     if reqs[el]==None:
         st.stop()
