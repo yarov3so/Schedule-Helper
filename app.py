@@ -207,6 +207,34 @@ st.set_page_config(
     page_icon="MHT.png", 
 )
 
+def try_int(mystring):
+    try:
+        return int(mystring)
+    except:
+        return None
+
+reqs={}
+
+if "df_reqs" not in st.session_state:
+    st.session_state.df_reqs = pd.DataFrame(columns=["Type of period", "Total required time (minutes)"])
+        
+edited_df_reqs = st.data_editor(
+    st.session_state.df_reqs,
+    num_rows="dynamic",  # lets user add rows directly
+    use_container_width=True,
+    hide_index=True,
+
+if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
+    st.warning("Duplicate types of period detected! Please specify each type of period only once.")
+    st.stop()
+
+reqs=dict(edited_df_reqs["Type of period"],df["Total required time (minutes)"]).to_dict()
+
+for el in reqs[el]:
+    reqs[el]=try_int(newtype.replace(" ",""))
+    if reqs[el]==None:
+        st.stop()
+
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
@@ -257,29 +285,17 @@ def comprehend(mystring):
     except:
         return None
     return tuple(data)
-
-def try_int(mystring):
-    try:
-        return int(mystring)
-    except:
-        return None
     
 df=df_output.copy()
 df["Start"]=df["Start"].apply(comprehend)
 df["End"]=df["End"].apply(comprehend)
 df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
+
+
 for idx in df[["Start","Length (minutes)","End"]].index:
     if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all():
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
-        st.stop()
-
-reqs={}
-for el in set(df["Type"]):
-    newtype=st.text_input(f"Enter the total required number of minutes for periods of type {el}:")
-    reqs[el]=try_int(newtype.replace(" ",""))
-    if reqs[el]==None:
-        st.warning("Please enter a valid positive whole number!")
         st.stop()
 
 st.dataframe(df)
