@@ -16,7 +16,6 @@ if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
 
 
-
 # Display editable table
 edited_df = st.data_editor(
     st.session_state.df_user,
@@ -25,10 +24,10 @@ edited_df = st.data_editor(
     hide_index=True
 )
 
-if st.session_state.df_user["Ignore?"]==None:
+st.session_state.df_user[st.session_state.df_user["Ignore?"]==None]:
     st.session_state.df_user["Ignore?"] = False
 
-df_output=edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
+df_output=edited_df[edited_df["Ignore?"] == False | edited_df["Ignore?"] == None].drop(columns=["Ignore?"])
 st.write("### Editable Periods")
 st.dataframe(df_output,hide_index=True)
 
