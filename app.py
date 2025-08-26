@@ -25,10 +25,6 @@ edited_df = st.data_editor(
     hide_index=True
 )
 
-# st.session_state.df_user = edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
-
-# # Save changes back
-# st.session_state.df_user = edited_df
-
+df_output=edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
 st.write("### Editable Periods")
-st.dataframe(edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"]),hide_index=True)
+st.dataframe(df_output,hide_index=True)
