@@ -235,8 +235,9 @@ if len(reqs)==0:
     st.stop()
 
 for el in reqs:
-    reqs[el]=try_int(reqs[el].replace(" ",""))
-    if reqs[el]==None:
+    try:
+        reqs[el]=try_int(reqs[el].replace(" ",""))
+    except:
         st.stop()
 
 if "df_user" not in st.session_state:
