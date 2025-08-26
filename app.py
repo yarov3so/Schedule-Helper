@@ -16,7 +16,7 @@ if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End"])
 
 df_user = st.session_state.df_user.copy()
-df_user["Disregard?"] = False 
+df_user["Ignore?"] = False 
 
 # Display editable table
 edited_df = st.data_editor(
@@ -25,7 +25,7 @@ edited_df = st.data_editor(
     use_container_width=True,
 )
 
-st.session_state.df = edited_df[edited_df["Delete?"] == False].drop(columns=["Delete?"])
+st.session_state.df = edited_df[edited_df["Ignore?"] == False].drop(columns=["Delete?"])
 
 # Save changes back
 st.session_state.df_user = edited_df
