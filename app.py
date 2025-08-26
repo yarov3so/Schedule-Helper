@@ -21,7 +21,7 @@ edited_df = st.data_editor(
     st.session_state.df_user,
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
     column_config={
         "Ignore?": st.column_config.CheckboxColumn(
             "Ignore?",
