@@ -26,6 +26,7 @@ edited_df = st.data_editor(
     st.session_state.df_user,
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
+    hide_index=True
 )
 
 st.session_state.df_user = edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
