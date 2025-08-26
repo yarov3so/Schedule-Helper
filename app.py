@@ -17,13 +17,13 @@ if "df_user" not in st.session_state:
 
 # Display editable table
 edited_df = st.data_editor(
-    st.session_state.df,
+    st.session_state.df_user,
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
 )
 
 # Save changes back
-st.session_state.df = edited_df
+st.session_state.df_user = edited_df
 
 st.write("### Current Data")
-st.dataframe(st.session_state.df)
+st.dataframe(st.session_state.df_user)
