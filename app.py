@@ -25,7 +25,7 @@ edited_df = st.data_editor(
     use_container_width=True,
 )
 
-st.session_state.df = edited_df[edited_df["Ignore?"] == False].drop(columns=["Delete?"])
+st.session_state.df = edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
 
 # Save changes back
 st.session_state.df_user = edited_df
