@@ -14,7 +14,7 @@ st.set_page_config(
 
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
-
+    st.session_state.df_user["Ignore?"] = False
 
 # Display editable table
 edited_df = st.data_editor(
@@ -22,6 +22,13 @@ edited_df = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
     hide_index=True
+    column_config={
+        "Ignore?": st.column_config.CheckboxColumn(
+            "Ignore?",
+            help="Check to ignore this row",
+            default=False  # ensures new rows have unchecked boxes
+        )
+    }
 )
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
