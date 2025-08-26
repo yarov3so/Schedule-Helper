@@ -15,8 +15,7 @@ st.set_page_config(
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
 
-if st.session_state.df_user["Ignore?"]==None:
-    st.session_state.df_user["Ignore?"] = False
+
 
 # Display editable table
 edited_df = st.data_editor(
@@ -25,6 +24,9 @@ edited_df = st.data_editor(
     use_container_width=True,
     hide_index=True
 )
+
+if st.session_state.df_user["Ignore?"]==None:
+    st.session_state.df_user["Ignore?"] = False
 
 df_output=edited_df[edited_df["Ignore?"] == False].drop(columns=["Ignore?"])
 st.write("### Editable Periods")
