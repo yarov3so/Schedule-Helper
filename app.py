@@ -24,7 +24,7 @@ edited_df = st.data_editor(
     hide_index=True
 )
 
-df_output=edited_df[(edited_df["Ignore?"] == False) ].drop(columns=["Ignore?"])
+df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 st.write("### Editable Periods")
 st.dataframe(df_output,hide_index=True)
 
