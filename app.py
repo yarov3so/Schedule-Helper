@@ -231,7 +231,7 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
 
 reqs=dict(zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]))
 
-if len(reqs.keys)==0:
+if len(reqs)==0:
     st.stop()
 
 for el in reqs:
