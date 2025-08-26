@@ -223,6 +223,7 @@ edited_df_reqs = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
     hide_index=True,
+)
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
