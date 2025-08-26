@@ -13,4 +13,17 @@ st.set_page_config(
 )
 
 if "df_user" not in st.session_state:
-    st.session_state.df_user = pd.DataFrame(columns=["Task", "Start", "End"])
+    st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End"])
+
+# Display editable table
+edited_df = st.data_editor(
+    st.session_state.df,
+    num_rows="dynamic",  # lets user add rows directly
+    use_container_width=True,
+)
+
+# Save changes back
+st.session_state.df = edited_df
+
+st.write("### Current Data")
+st.dataframe(st.session_state.df)
