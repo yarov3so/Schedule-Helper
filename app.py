@@ -95,6 +95,11 @@ def fill_blanks(reqs,sched):
                 st.markdown(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' evenly to the following periods: {allocation_str}")
             
             if length_rem_diff!=0 and rem_req>0:
+                allocation=[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)]
+                allocation_str=""
+                for per in allocation:
+                    allocation_str+=(per+", ")
+                allocation_str=allocation_str[:-2]
                 st.markdown(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods: {allocation_str}")
 
             #Need to create a list of these flexible periods...
