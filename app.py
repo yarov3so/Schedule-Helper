@@ -211,8 +211,8 @@ def validate(reqs,sched):
     if sched_with_gaps!=sched:
         return sched_with_gaps
     else:
+        st.markdown("##### The current schedule is valid and optimal. ^^")
         
-
     return sched
 
 
