@@ -333,10 +333,22 @@ df.columns=["name","type","start","length","end"]
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
+def highlight_row_condition(row):
+    
+        if row['Type'] == "gap":
+            return ['background-color: lightgreen'] * len(row)
+        elif row['Type'] == "overlap":
+            return ['background-color: lightred'] * len(row)
+        else:
+            return [''] * len(row) # 
+
 if type(schedule)==list:
     df=pd.DataFrame(schedule)
     df.start=df.start.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
     df.end=df.end.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
     df.length=df.length.astype(str)
+
+    df.columns=["Name","Type","Start","Length (minutes)","End"]
+    df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
 
