@@ -216,10 +216,11 @@ def try_int(mystring):
 reqs={}
 
 if "df_reqs" not in st.session_state:
-    st.session_state.df_reqs = pd.DataFrame(columns=["Type of period", "Total required time (minutes)","Ignore?"])
-    st.session_state.df_reqs["Ignore?"] = False
-
-st.dataframe(st.session_state.df_reqs)
+    st.session_state.df_reqs = pd.DataFrame([{
+        "Type of period": "",
+        "Total required time (minutes)": None,
+        "Ignore?": False
+    }])
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
@@ -235,6 +236,7 @@ edited_df_reqs = st.data_editor(
     }
 )
 
+st.dataframe(edited_df_reqs)
 
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
