@@ -332,7 +332,7 @@ st.dataframe(df,hide_index=True)
 df.columns=["name","type","start","length","end"]
 
 schedule=validate(reqs,df.to_dict(orient="records"))
-st.write(schedule)
+
 if type(schedule)==list:
     df=pd.DataFrame(schedule)
     df.start=df.start.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
