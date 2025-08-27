@@ -336,9 +336,9 @@ schedule=validate(reqs,df.to_dict(orient="records"))
 def highlight_row_condition(row):
     
         if row['Type'] == "gap":
-            return ['background-color: lightgreen'] * len(row)
+            return ['background-color: rgba(0, 255, 0, 0.1)'] * len(row)
         elif row['Type'] == "overlap":
-            return ['background-color: lightred'] * len(row)
+            return ['background-color: rgba(255, 0, 0, 0.1)'] * len(row)
         else:
             return [''] * len(row) # 
 
