@@ -291,12 +291,16 @@ edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
-for key in df_output:
-    df_output[key]=df_output[key]
+# for key in df_output:
+#     df_output[key]=df_output[key]
 
 if "" in df_output["Type"]:
     st.stop()
-    
+
+if set(df_output["Type"]).issubset(set(reqs.values()))==False:
+    st.warning("Only use the active period types you specified in the beginning!")
+    st.stop()
+
 st.write("### Editable Periods")
 st.dataframe(df_output,hide_index=True)
 
@@ -316,9 +320,7 @@ df["Start"]=df["Start"].apply(comprehend)
 df["End"]=df["End"].apply(comprehend)
 df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
-if set(df["Type"]).issubset(set(reqs.values()))==False:
-    st.warning("Only use the active period types you specified in the beginning!")
-    st.stop()
+
 
 for idx in df[["Start","Length (minutes)","End"]].index:
     if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all():
