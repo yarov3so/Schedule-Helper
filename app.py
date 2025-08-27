@@ -264,7 +264,7 @@ if "df_reqs" not in st.session_state:
         "Ignore?": False
     }])
 
-st.markdown("Enter the types of periods that will appear in your schedule (e.g. teaching, duty, lunch, etc.) in the table below. Be sure to avoid using \"gap\" and \"overlap\" as period names.")
+st.markdown("Enter the types of periods that will appear in your schedule (e.g. teaching, duty, lunch, etc.) in the table below. Be sure to avoid using \"gap\" and \"overlap\" as names for period types.")
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
