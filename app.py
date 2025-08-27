@@ -233,7 +233,7 @@ edited_df_reqs = st.data_editor(
     }
 )
 
-st.dataframe(edited_df_reqs)
+st.dataframe(st.session_state.df_reqs)
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
