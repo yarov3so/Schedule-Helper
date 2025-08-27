@@ -259,7 +259,7 @@ if "df_reqs" not in st.session_state:
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
     num_rows="dynamic",  # lets user add rows directly
-    use_container_width=True,
+    width="stretch",
     hide_index=True,
     column_config={
         "Ignore?": st.column_config.CheckboxColumn(
@@ -298,7 +298,7 @@ if "df_user" not in st.session_state:
 edited_df = st.data_editor(
     st.session_state.df_user,
     num_rows="dynamic",  # lets user add rows directly
-    use_container_width=True,
+    width="stretch",
     hide_index=True,
     column_config={
         "Ignore?": st.column_config.CheckboxColumn(
