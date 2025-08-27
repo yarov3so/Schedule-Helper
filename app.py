@@ -145,6 +145,8 @@ def fill_blanks(reqs,sched):
                 
 def validate(reqs,sched):
 
+    global marker
+
     badperiods=[]
     aps=set()
     gaps=[]
