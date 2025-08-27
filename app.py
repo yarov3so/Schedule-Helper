@@ -47,7 +47,7 @@ def first_period(sched): # Periods must be non-overlapping!
         if period["start"][1]==min_index_min:
             return period
 
-marker=False
+marker=True
 
 def fill_blanks(reqs,sched): 
 
