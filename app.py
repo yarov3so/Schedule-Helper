@@ -272,15 +272,6 @@ edited_df_reqs = st.data_editor(
     width="stretch",
     hide_index=True,
     column_config={
-        "Type": st.column_config.SelectboxColumn(
-            "Type",
-            options=list(reqs.keys()),  # only allow valid period types
-            help="Select the type of period"
-        ),
-        "Name": st.column_config.TextColumn(
-            "Name",
-            help="Enter the name of the period or activity"
-        ),
         "Ignore?": st.column_config.CheckboxColumn(
             "Ignore?",
             help="Check to ignore this type of period (deleting rows is not possible)",
@@ -323,6 +314,11 @@ edited_df = st.data_editor(
     width="stretch",
     hide_index=True,
     column_config={
+        "Type": st.column_config.SelectboxColumn(
+            "Type",
+            options=list(reqs.keys()),  # only allow valid period types
+            help="Select the type of period"
+        ),
         "Ignore?": st.column_config.CheckboxColumn(
             "Ignore?",
             help="Check to ignore this row (deleting rows is not possible)",
