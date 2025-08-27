@@ -328,6 +328,7 @@ for idx in df[["Start","Length (minutes)","End"]].index:
 st.markdown("### Editable Periods")
 st.dataframe(df,hide_index=True)
 
+st.text(df.to_dict(orient="records"))
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
