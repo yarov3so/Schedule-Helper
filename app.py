@@ -326,8 +326,7 @@ for idx in df[["Start","Length (minutes)","End"]].index:
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
-st.markdown("### Editable Periods")
-st.dataframe(df,hide_index=True)
+st.markdown("### Proposed Schedule")
 
 df.columns=["name","type","start","length","end"]
 
