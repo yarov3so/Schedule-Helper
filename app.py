@@ -147,7 +147,13 @@ def validate(reqs,sched):
         except:
             continue
     if len(badperiods)!=0:
-        return "The following periods end before they start:",badperiods
+        badperiods_str=""
+        for bp in badperiods:
+            badperiods_str+=(bp+", ")
+        badperiods_str=badperiods_str[:-2]
+        st.warning(f"The following periods end before they start: {badperiods_str}. Please correct their start/end times before continuing."
+        st.stop()
+
 
     # Logically fill blanks
     sched_test=fill_blanks(reqs,sched[:])
@@ -204,6 +210,8 @@ def validate(reqs,sched):
 
     if sched_with_gaps!=sched:
         return sched_with_gaps
+    else:
+        
 
     return sched
 
