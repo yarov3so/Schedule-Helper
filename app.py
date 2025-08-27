@@ -391,5 +391,5 @@ if type(schedule)==list:
     st.dataframe(df,hide_index=True)
 
 if marker==True:
-    st.markdown("##### The current schedule is valid and optimal. ^^")
+    st.success("##### The current schedule is valid and optimal. ^^")
 
