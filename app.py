@@ -216,7 +216,7 @@ def try_int(mystring):
 
 reqs={}
 
-#st.session_state.clear()
+st.session_state.clear()
 
 if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
@@ -247,21 +247,22 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
 reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
 
 if len(reqs)==0:
-    st.stop()
+    st.warning("Please fill out at least one valid period type before proceeding.")
+    #st.stop()
+    
 
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
         if type(reqs[el])!=int:
-            st.stop()
+            st.warning(f"Invalid required time for {el}.")
+            #st.stop()
     except:
         st.stop()
 
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
-else:
-    st.session_state.df_user=edited_df
 
 # Display editable table
 edited_df = st.data_editor(
