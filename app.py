@@ -247,16 +247,14 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
 reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
 
 if len(reqs)==0:
-    st.warning("Please fill out at least one valid period type before proceeding.")
-    #st.stop()
+    st.stop()
     
 
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
         if type(reqs[el])!=int:
-            st.warning(f"Invalid required time for {el}.")
-            #st.stop()
+            st.stop()
     except:
         st.stop()
 
@@ -290,6 +288,8 @@ edited_df = st.data_editor(
         )
     }
 )
+
+st.session_state.df_user = edited_df
 
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
