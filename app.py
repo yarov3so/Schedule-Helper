@@ -289,7 +289,9 @@ edited_df = st.data_editor(
     }
 )
 
-st.session_state.df_user = edited_df
+st.session_state.df_user = edited_df.style.hide(axis='index')
+if st.session_state.df_user.empty:
+    st.stop()
 
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
