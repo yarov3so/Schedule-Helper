@@ -216,20 +216,28 @@ def try_int(mystring):
 reqs={}
 
 if "df_reqs" not in st.session_state:
-    st.session_state.df_reqs = pd.DataFrame(columns=["Type of period", "Total required time (minutes)"])
-        
+    st.session_state.df_reqs = pd.DataFrame(columns=["Type of period", "Total required time (minutes)","Ignore?"])
+    st.session_state.df_reqs["Ignore?"] = False
+    
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
     num_rows="dynamic",  # lets user add rows directly
     use_container_width=True,
     hide_index=True,
+    column_config={
+        "Ignore?": st.column_config.CheckboxColumn(
+            "Ignore?",
+            help="Check to ignore this row (deleting rows is not possible)",
+            default=False  # ensures new rows have unchecked boxes
+        )
+    }
 )
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
     st.stop()
 
-reqs=dict(zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]))
+reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
 
 if len(reqs)==0:
     st.stop()
@@ -237,8 +245,12 @@ if len(reqs)==0:
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
+        if type(reqs[el])!=int:
+            st.stop()
     except:
         st.stop()
+
+st.dataframe(pd.DataFrame(reqs))
 
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
