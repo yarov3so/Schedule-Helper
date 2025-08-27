@@ -185,6 +185,7 @@ def validate(reqs,sched):
                 #overlaps=overlaps.union(set({sched[i]["name"]}.union({sched[j]["name"]})))
                 overlaps=overlaps.union(tuple(sorted([sched[i]["name"],sched[j]["name"]])))
     overlaps=list(overlaps)
+    st.text(overlaps)
 
     if len(overlaps)!=0:
 
