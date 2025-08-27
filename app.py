@@ -181,12 +181,13 @@ def validate(reqs,sched):
         for j in range(len(sched)):
             if j!=i and overlap((sched[i]["start"],sched[i]["end"]),(sched[j]["start"],sched[j]["end"])):
                 overlaps=overlaps.union({sched[i]["name"]}.union({sched[j]["name"]}))
+    overlaps=list([list(olap) for olap in overlaps])
 
     if len(overlaps)!=0:
 
         overlaps_str=""
         for olap in overlaps:
-            overlaps_str+=(olap+", ")
+            overlaps_str+=(olap[0]+" with "+olap[1]+", ")
         overlaps_str=overlaps_str[:-2]
         st.warning(f"Overlaps detected: {overlaps_str}")
         marker=False
