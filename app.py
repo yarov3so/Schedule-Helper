@@ -239,7 +239,7 @@ def validate(reqs,sched):
 
 
 st.title("Schedule Maker")
-st.markdown("#### A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
+st.markdown("##### A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
 
 st.set_page_config(
     page_title="Schedule Maker",
@@ -404,3 +404,8 @@ if type(schedule)==list:
 if marker==True:
     st.success("##### The current schedule is valid and optimal. ^^")
 
+
+st.text("")
+st.markdown("""*Crafted by yarov3so*   
+<a href="https://www.buymeacoffee.com/yarov3so" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="width: 9em; height: auto; padding-top: 0.7em; padding-bottom: 1em" ></a>  
+See my other [Math Help Tools](https://mathh3lptools.streamlit.app)""",unsafe_allow_html=True)
