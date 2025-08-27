@@ -83,7 +83,7 @@ def fill_blanks(reqs,sched):
         if rem_req<0:
             marker=False
             st.warning(f"Too many minutes allocated to the periods of type \'{typ}\'! Allocate {-rem_req} fewer minutes to periods of this type.")
-            #return None
+            st.stop()
 
         split_rest=False
         if len(sched_typ) - j != 0 and rem_req>=0:
