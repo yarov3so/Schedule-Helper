@@ -262,6 +262,8 @@ if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
 
+st.session_state.df_user = edited_df.reset_index(drop=True)
+
 # Display editable table
 edited_df = st.data_editor(
     st.session_state.df_user,
