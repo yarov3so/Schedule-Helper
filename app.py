@@ -289,7 +289,7 @@ edited_df = st.data_editor(
     }
 )
 
-st.session_state.df_user = edited_df.style.hide(axis='index')
+st.session_state.df_user = edited_df
 if st.session_state.df_user.empty:
     st.stop()
 
