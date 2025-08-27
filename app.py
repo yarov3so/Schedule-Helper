@@ -152,6 +152,7 @@ def validate(reqs,sched):
         return None
 
     # Check for overlaps
+    overlaps={}
     for i in range (len(sched)):
         for j in range(len(sched)):
             if j!=i and overlap((sched[i]["start"],sched[i]["end"]),(sched[j]["start"],sched[j]["end"])):
