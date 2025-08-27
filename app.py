@@ -312,7 +312,9 @@ df["Start"]=df["Start"].apply(comprehend)
 df["End"]=df["End"].apply(comprehend)
 df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
-
+if set(df["Type"]).issubset(set(reqs.values()))==False:
+    st.warning("Only use the period types you specified above!")
+    st.stop()
 
 for idx in df[["Start","Length (minutes)","End"]].index:
     if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all():
