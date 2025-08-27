@@ -151,7 +151,7 @@ def validate(reqs,sched):
         for bp in badperiods:
             badperiods_str+=(bp+", ")
         badperiods_str=badperiods_str[:-2]
-        st.warning(f"The following periods end before they start: {badperiods_str}. Please correct their start/end times before continuing."
+        st.warning(f"The following periods end before they start: {badperiods_str}. Please correct their start/end times before continuing.")
         st.stop()
 
 
