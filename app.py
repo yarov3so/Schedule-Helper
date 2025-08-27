@@ -297,7 +297,7 @@ edited_df["Type"] = edited_df["Type"].fillna("")
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 
 if df_output.empty:
-    st.stop
+    st.stop()
 
 if "" in df_output["Type"]:
     st.stop()
