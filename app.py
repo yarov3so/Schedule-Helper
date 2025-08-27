@@ -215,15 +215,14 @@ def try_int(mystring):
 
 reqs={}
 
+st.session_state.clear()
 
-st.session_state.df_reqs = pd.DataFrame([{
-    "Type of period": "",
-    "Total required time (minutes)": None,
-    "Ignore?": False
-}])
-
-st.dataframe(st.session_state.df_reqs)
-st.stop()
+if "df_reqs" not in st.session_state:
+    st.session_state.df_reqs = pd.DataFrame([{
+        "Type of period": "",
+        "Total required time (minutes)": None,
+        "Ignore?": False
+    }])
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
@@ -238,8 +237,6 @@ edited_df_reqs = st.data_editor(
         )
     }
 )
-
-
 
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
