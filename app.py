@@ -218,6 +218,8 @@ reqs={}
 if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame(columns=["Type of period", "Total required time (minutes)","Ignore?"])
     st.session_state.df_reqs["Ignore?"] = False
+
+st.dataframe(st.session_state.df_reqs)
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
@@ -233,7 +235,7 @@ edited_df_reqs = st.data_editor(
     }
 )
 
-st.dataframe(st.session_state.df_reqs)
+
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
