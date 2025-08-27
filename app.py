@@ -303,7 +303,7 @@ if "df_user" not in st.session_state:
     st.session_state.df_user["Ignore?"] = False
 
 st.markdown("Use the table below to fill in your schedule to the best of your knowledge and ability. Note that you only need to specify ONE of Start/End for each period, but may choose to specify all three of Start/Length/End.")
-st.markdown("*The algorithm uses even allocation, meaning it distributes the required hours as evenly as possible across the flexible periods (those for which only one of Start/Length/End has been specified), while respecting the schedule constraints specified by the user.*"
+st.markdown("*The algorithm uses even allocation, meaning it distributes the required hours as evenly as possible across the flexible periods (those for which only one of Start/Length/End has been specified), while respecting the schedule constraints specified by the user.*")
 
 # Display editable table
 edited_df = st.data_editor(
