@@ -294,10 +294,10 @@ edited_df = st.data_editor(
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
 
-if edited_df.empty:
-    st.stop()
-
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
+
+if df_output.empty:
+    st.stop
 
 if "" in df_output["Type"]:
     st.stop()
