@@ -219,7 +219,6 @@ if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
         "Type of period": "",
         
-        "Ignore?": False
     }])
 
 st.dataframe(st.session_state.df_reqs)
