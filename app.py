@@ -294,7 +294,7 @@ df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnu
 for key in df_output:
     df_output[key]=df_output[key]
 
-if None in df_output["Type"]:
+if "" in df_output["Type"]:
     st.stop()
     
 st.write("### Editable Periods")
