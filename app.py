@@ -183,7 +183,7 @@ def validate(reqs,sched):
         for j in range(len(sched)):
             if j!=i and overlap((sched[i]["start"],sched[i]["end"]),(sched[j]["start"],sched[j]["end"])):
                 #overlaps=overlaps.union(set({sched[i]["name"]}.union({sched[j]["name"]})))
-                overlaps=overlaps.union(tuple(sorted([sched[i]["name"],sched[j]["name"]])))
+                overlaps=overlaps.union([tuple(sorted([sched[i]["name"],sched[j]["name"]]))])
     st.text(overlaps)
     overlaps=list(overlaps)
     
