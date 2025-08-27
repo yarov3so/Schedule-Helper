@@ -297,6 +297,7 @@ df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnu
 if "" in df_output["Type"]:
     st.stop()
 
+st.markdown(f"{set(reqs.values())}")
 if set(df_output["Type"]).issubset(set(reqs.values()))==False:
     st.warning("Only use the active period types you specified in the beginning!")
     st.stop()
