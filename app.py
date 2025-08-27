@@ -330,13 +330,12 @@ st.dataframe(df,hide_index=True)
 
 df.columns=["name","type","start","length","end"]
 
-st.text(df.to_dict(orient="records"))
-
 schedule=validate(reqs,df.to_dict(orient="records"))
 
 if type(schedule)==list:
     df=pd.DataFrame(schedule)
     df.start=df.start.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
     df.end=df.end.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
-    st.dataframe(df)
+    df.length=df.length.astype(str)
+    st.dataframe(df,hide_index=True)
 
