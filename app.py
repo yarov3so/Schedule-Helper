@@ -256,8 +256,6 @@ for el in reqs:
     except:
         st.stop()
 
-st.dataframe(pd.DataFrame(reqs))
-
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
