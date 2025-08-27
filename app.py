@@ -184,10 +184,8 @@ def validate(reqs,sched):
             if j!=i and overlap((sched[i]["start"],sched[i]["end"]),(sched[j]["start"],sched[j]["end"])):
                 #overlaps=overlaps.union(set({sched[i]["name"]}.union({sched[j]["name"]})))
                 overlaps=overlaps.union([tuple(sorted([sched[i]["name"],sched[j]["name"]]))])
-    st.text(overlaps)
     overlaps=list(overlaps)
     
-
     if len(overlaps)!=0:
 
         overlaps_str=""
@@ -222,6 +220,7 @@ def validate(reqs,sched):
                 new_gap["end"]=sched[i]["end"]
                 new_gap["length"]=-(60*timediff(sched[i+1]["start"],sched[i]["end"])[0]+timediff(sched[i+1]["start"],sched[i]["end"])[1])
                 j-=1
+                k+=1
                 
             sched_with_gaps_old=sched_with_gaps[:]
             sched_with_gaps.append(new_gap)
