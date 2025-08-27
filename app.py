@@ -260,6 +260,8 @@ for el in reqs:
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
+else:
+    st.session_state.df_user=edited_df
 
 # Display editable table
 edited_df = st.data_editor(
