@@ -216,7 +216,7 @@ def try_int(mystring):
 
 reqs={}
 
-#st.session_state.clear()
+st.session_state.clear()
 
 if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
