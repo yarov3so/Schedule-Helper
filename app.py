@@ -239,7 +239,7 @@ def validate(reqs,sched):
 
 
 st.title("Schedule Maker")
-st.markdown("A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
+st.markdown("#### A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
 
 st.set_page_config(
     page_title="Schedule Maker",
@@ -262,6 +262,8 @@ if "df_reqs" not in st.session_state:
         "Total required time (minutes)": "",
         "Ignore?": False
     }])
+
+st.markdown("Enter the types of periods that will appear in your schedule (e.g. teaching, duty, lunch, etc.) in the table below. Be sure to avoid using \"gap\" and \"overlap\" as period names.")
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
@@ -300,6 +302,8 @@ if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
 
+st.markdown("Use the table below to fill in your schedule to the best of your knowledge and ability. Note that you only need to specify ONE of Start/End for each period, but may choose to specify all three of Start/Length/End.")
+st.markdown("*The algorithm uses even allocation, meaning it distributes the required hours as evenly as possible across the flexible periods (those for which only one of Start/Length/End has been specified), while respecting the schedule constraints specified by the user.*"
 
 # Display editable table
 edited_df = st.data_editor(
