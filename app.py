@@ -289,7 +289,7 @@ edited_df = st.data_editor(
     }
 )
 
-st.session_state.df_user = edited_df
+#st.session_state.df_user = edited_df
 
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
@@ -326,7 +326,7 @@ df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
 
 for idx in df[["Start","Length (minutes)","End"]].index:
-    if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all() or df[["Start","Length (minutes)","End"]].loc[idx].empty:
+    if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all():
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
