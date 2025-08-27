@@ -291,19 +291,16 @@ edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
-# for key in df_output:
-#     df_output[key]=df_output[key]
 
 if "" in df_output["Type"]:
     st.stop()
 
-st.markdown(f"{set(reqs.values())}")
 if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
     st.warning("Only use the active period types you specified in the beginning!")
     st.stop()
 
-st.write("### Editable Periods")
-st.dataframe(df_output,hide_index=True)
+
+#st.dataframe(df_output,hide_index=True)
 
 def comprehend(mystring):
     data=[]
@@ -328,5 +325,6 @@ for idx in df[["Start","Length (minutes)","End"]].index:
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
-st.dataframe(df)
+st.write("### Editable Periods")
+st.dataframe(df,hide_index=True)
 
