@@ -77,8 +77,8 @@ def fill_blanks(reqs,sched):
                 j+=1
                 
         if rem_req<0:
-            print(f"Too many minutes allocated to the periods of type \'{typ}\'! Allocate {-rem_req} fewer minutes to periods of this type.")
-            return None
+            st.warning(f"Too many minutes allocated to the periods of type \'{typ}\'! Allocate {-rem_req} fewer minutes to periods of this type.")
+            #return None
 
         split_rest=False
         if len(sched_typ) - j != 0 and rem_req>=0:
@@ -87,10 +87,15 @@ def fill_blanks(reqs,sched):
             length_rem_diff=rem_req-length_rem_each*(len(sched_typ) - j)
 
             if length_rem_diff==0 and rem_req>0:
-                print(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' evenly to the following periods:",[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)])
+                allocation=[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)]
+                allocation_str=""
+                for per in allocation:
+                    allocation_str+=(per+", ")
+                allocation_str=allocation_str[:-2]
+                st.markdown(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' evenly to the following periods: {allocation_str}")
             
             if length_rem_diff!=0 and rem_req>0:
-                print(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods:",[period["name"] for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)])
+                st.markdown(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods: {allocation_str}")
 
             #Need to create a list of these flexible periods...
             sched_typ_flex=[period for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)]
@@ -115,7 +120,7 @@ def fill_blanks(reqs,sched):
                     sched_typ_flex[i%len(sched_typ_flex)]["start"]=timediff(sched_typ_flex[i%len(sched_typ_flex)]["start"],(0,1))
 
         if split_rest==False and rem_req>0:
-            print(f"Could not allocate the remaining {rem_req} minutes of period type \'{typ}\'! Add more periods of this type, or make more room for existing ones.")
+            st.warning(f"Could not allocate the remaining {rem_req} minutes of period type \'{typ}\'! Add more periods of this type, or make more room for existing ones.")
             
         sched_filled+=sched_typ[:]
 
@@ -159,7 +164,12 @@ def validate(reqs,sched):
                 overlaps=overlaps.union({sched[i]["name"]}.union({sched[j]["name"]}))
 
     if len(overlaps)!=0:
-        print("Overlaps detected:",overlaps)
+
+        overlaps_str=""
+        for olap in overlaps:
+            overlaps_str+=(olap+", ")
+        overlaps_str=overlaps_str[:-2]
+        st.warning(f"Overlaps detected: {overlaps_str}")
 
     # Sort periods
     sched_sorted=[]
