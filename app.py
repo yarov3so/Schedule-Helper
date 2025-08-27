@@ -298,7 +298,7 @@ if "" in df_output["Type"]:
     st.stop()
 
 st.markdown(f"{set(reqs.values())}")
-if set(df_output["Type"]).issubset(set(reqs.values()))==False:
+if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
     st.warning("Only use the active period types you specified in the beginning!")
     st.stop()
 
