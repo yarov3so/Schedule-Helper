@@ -227,11 +227,13 @@ edited_df_reqs = st.data_editor(
     column_config={
         "Ignore?": st.column_config.CheckboxColumn(
             "Ignore?",
-            help="Check to ignore this row (deleting rows is not possible)",
+            help="Check to ignore this type of period (deleting rows is not possible)",
             default=False  # ensures new rows have unchecked boxes
         )
     }
 )
+
+st.dataframe(edited_df_reqs)
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.warning("Duplicate types of period detected! Please specify each type of period only once.")
