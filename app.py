@@ -325,6 +325,15 @@ for idx in df[["Start","Length (minutes)","End"]].index:
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
-st.write("### Editable Periods")
+st.markdown("### Editable Periods")
 st.dataframe(df,hide_index=True)
+
+
+schedule=validate(reqs,df.to_dict(orient="records"))
+
+if type(schedule)==list:
+    df=pd.DataFrame(schedule)
+    df.start=df.start.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
+    df.end=df.end.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
+    st.dataframe(df)
 
