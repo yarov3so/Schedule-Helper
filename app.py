@@ -216,7 +216,7 @@ def try_int(mystring):
 
 reqs={}
 
-#st.session_state.clear()
+st.session_state.clear()
 
 if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
@@ -262,7 +262,6 @@ if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
     st.session_state.df_user["Ignore?"] = False
 
-st.session_state.df_user = edited_df.reset_index(drop=True)
 
 # Display editable table
 edited_df = st.data_editor(
@@ -291,7 +290,7 @@ edited_df = st.data_editor(
     }
 )
 
-st.session_state.df_user = edited_df
+#st.session_state.df_user = edited_df
 
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
