@@ -243,7 +243,7 @@ st.markdown("A tool for generating and tweaking schedules primarily meant to be 
 st.text("")
 
 st.set_page_config(
-    page_title="Schedule Maker",
+    page_title="Schedule Helper",
     page_icon="MHT.png", 
 )
 
