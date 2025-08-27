@@ -238,7 +238,7 @@ def validate(reqs,sched):
 
 
 
-st.title("Schedule Maker")
+st.title("Schedule Helper")
 st.markdown("A tool for generating and tweaking schedules primarily meant to be used by teachers in Quebec.")
 st.text("")
 
