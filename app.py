@@ -221,6 +221,9 @@ if "df_reqs" not in st.session_state:
         "Total required time (minutes)": None,
         "Ignore?": False
     }])
+
+st.dataframe(st.session_state.df_reqs)
+st.stop()
     
 edited_df_reqs = st.data_editor(
     st.session_state.df_reqs,
@@ -236,7 +239,7 @@ edited_df_reqs = st.data_editor(
     }
 )
 
-st.dataframe(edited_df_reqs)
+
 
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
