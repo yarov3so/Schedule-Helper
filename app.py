@@ -383,6 +383,10 @@ for idx in df[["Start","Length (minutes)","End"]].index: #df[["Start","Length (m
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
+if None in df["Type"]:
+    st.warning("Please remember to specify the type of each period listed above.")
+    st.stop()
+
 if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
     #st.warning("Only use the active period types you specified in the beginning!")
     st.stop()
