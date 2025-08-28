@@ -353,7 +353,7 @@ if "" in df_output["Type"]:
     st.stop()
 
 if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
-    st.warning("Only use the active period types you specified in the beginning!")
+    #st.warning("Only use the active period types you specified in the beginning!")
     st.stop()
 
 
