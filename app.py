@@ -449,7 +449,7 @@ fig, ax = plt.subplots(figsize=(8, 4))
 
 color_dict={}
 
-types=sorted(list(df["Type"]))
+types=sorted(list(set(df_copy["Type"])-set(None)))
 st.text(types)
 ntypes=len(types)
 
