@@ -449,7 +449,7 @@ fig, ax = plt.subplots(figsize=(8, 4))
 
 color_dict={}
 
-types=sorted(list(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"]))
+types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
 ntypes=len(types)
 
 st.text(types)
