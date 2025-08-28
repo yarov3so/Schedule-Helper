@@ -346,11 +346,11 @@ edited_df["Type"] = edited_df["Type"].fillna("")
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 
-if df_output.empty:
-    st.stop()
+# if df_output.empty:
+#     st.stop()
 
-if "" in df_output["Type"]:
-    st.stop()
+# if "" in df_output["Type"]:
+#     st.stop()
 
 # if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
 #     #st.warning("Only use the active period types you specified in the beginning!")
