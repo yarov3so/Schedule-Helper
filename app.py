@@ -313,6 +313,7 @@ edited_df = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     width="stretch",
     hide_index=True,
+    key="df_user_editor",
     column_config={
         "Type": st.column_config.SelectboxColumn(
             "Type",
@@ -339,7 +340,8 @@ edited_df = st.data_editor(
     }
 )
 
-st.session_state.df_user = edited_df.copy()
+if not edited_df.equals(st.session_state.df_user):
+    st.session_state.df_user = edited_df.copy()
 
 #st.session_state.df_user = edited_df
 
