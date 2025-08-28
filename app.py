@@ -449,8 +449,7 @@ fig, ax = plt.subplots(figsize=(8, 4))
 
 color_dict={}
 
-types=sorted(list(set(df_copy["Type"])))
-st.text(types)
+types=sorted(list(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"]))
 ntypes=len(types)
 
 for i in range(ntypes):
@@ -474,7 +473,7 @@ for _, row in df_copy.iterrows():
             color=color_dict[row["Type"]],
             edgecolor="black",
             alpha=0.6,
-            height=0.6
+            height=0.3
         )
         ax.text(
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
