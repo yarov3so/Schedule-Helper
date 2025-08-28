@@ -435,7 +435,7 @@ if type(schedule)==list:
 
 
 
-plt.rcParams["font.family"] = "Source Sans Pro"
+plt.rcParams["font.family"] = "DejaVu Sans"
 
 # Convert strings to datetime objects (only time, same day)
 df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
