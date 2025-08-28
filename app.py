@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from datetime import datetime
 import itertools
+import textwrap
 
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
@@ -440,22 +441,25 @@ plt.rcParams["font.family"] = "Source Sans Pro"
 df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
 df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 
-colors_list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#bcbd22","#17becf", "#e377c2", "#8c564b", "#7f7f7f", "#aec7e8"]
-#colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+#colors_list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#bcbd22","#17becf", "#e377c2", "#8c564b", "#7f7f7f", "#aec7e8"]
+colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
 #color_cycle = itertools.cycle(colors_list)
 
 fig, ax = plt.subplots(figsize=(8, 4))
 
 color_dict={}
 
-types=list(df_copy["Type"])
+types=sorted(list(df_copy["Type"]))
 ntypes=len(types)
 
 for i in range(ntypes):
-    color_dict[types[i]]=colors_list[i%10]
-    
+    color_dict[types[i]]=colors_list[i%(len(colors_list))]
+
+
 
 for _, row in df_copy.iterrows():
+    
+    label = "\n".join(textwrap.wrap(row["Name"], width=10))
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
@@ -473,7 +477,7 @@ for _, row in df_copy.iterrows():
         ax.text(
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
             y=row["Type"],
-            s=row["Name"],
+            s=label, #row["Name"],
             va='center', ha='center', color='black'
         )
 
