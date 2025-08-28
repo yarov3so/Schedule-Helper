@@ -377,8 +377,8 @@ df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
 
 
-for idx in df[["Start","Length (minutes)","End"]].index:
-    if df[["Start","Length (minutes)","End"]].loc[idx].isnull().all() or df[["Start","Length (minutes)","End"]].loc[idx][1]==None:
+for idx in df[["Start","Length (minutes)","End"]].index: #df[["Start","Length (minutes)","End"]].loc[idx].isnull().all() or (
+    if df[["Start","Length (minutes)","End"]].loc[idx][0]==None and df[["Start","Length (minutes)","End"]].loc[idx][2]==None :
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
