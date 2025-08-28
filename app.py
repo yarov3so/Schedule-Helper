@@ -500,12 +500,12 @@ for _, row in df_copy.iterrows():
 for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvspan(
         row["Start"], row["End"],
-        color="red", alpha=0.4  # semi-transparent red
+        color="red", alpha=0.1  # semi-transparent red
     )
 for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
     ax.axvspan(
         row["Start"], row["End"],
-        color="blue", alpha=0.4  # semi-transparent red
+        color="blue", alpha=0.1  # semi-transparent red
     )
 
 # Format x-axis as time
