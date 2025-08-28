@@ -452,7 +452,7 @@ types=list(df_copy["Type"])
 ntypes=len(types)
 
 for i in range(ntypes):
-    color_dict[types[i]]=color_list[i%10]
+    color_dict[types[i]]=colors_list[i%10]
     
 
 for _, row in df_copy.iterrows():
