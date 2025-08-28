@@ -118,13 +118,13 @@ def fill_blanks(reqs,sched):
                 st.success(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods: {allocation_str}")
 
             #Need to create a list of these flexible periods...
-            sched_typ_flex=[period for period in sched_typ if ((period["start"]==None or math.isnan(period["start"])) and (period["length"]==None or math.isnan(period["length"]))) or ((period["end"]==None or math.isnan(period["end"])) and (period["length"]==None or math.isnan(period["length"])))]
+            sched_typ_flex=[period for period in sched_typ if ((period["start"]==None) and (period["length"]==None or math.isnan(period["length"]))) or ((period["end"]==None) and (period["length"]==None or math.isnan(period["length"])))]
             for period in sched_typ_flex:
-                if ((period["start"]==None or math.isnan(period["start"])) and (period["length"]==None or math.isnan(period["length"]))):
+                if ((period["start"]==None) and (period["length"]==None or math.isnan(period["length"]))):
                     period["length"]=0
                     period["start"]= period["end"]
                     period["init"]="end"
-                if ((period["end"]==None or math.isnan(period["end"])) and (period["length"]==None or math.isnan(period["length"]))):
+                if ((period["end"]==None) and (period["length"]==None or math.isnan(period["length"]))):
                     period["length"]=0
                     period["end"]= period["start"]
                     period["init"]="start"
