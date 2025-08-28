@@ -473,7 +473,7 @@ for _, row in df_copy.iterrows():
             left=row["Start"],
             color=color_dict[row["Type"]],
             edgecolor="black",
-            alpha=0.6
+            alpha=0.6,
             height=0.6
         )
         ax.text(
