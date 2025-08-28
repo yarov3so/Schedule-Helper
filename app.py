@@ -432,8 +432,7 @@ if type(schedule)==list:
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
 
-if marker==True:
-    st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
+
 
 
 
@@ -441,7 +440,8 @@ if marker==True:
 df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
 df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 
-colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+colors_list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#bcbd22","#17becf", "#e377c2", "#8c564b", "#7f7f7f", "#aec7e8"]
+#colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
 color_cycle = itertools.cycle(colors_list)
 
 fig, ax = plt.subplots(figsize=(8, 4))
@@ -450,15 +450,18 @@ for _, row in df_copy.iterrows():
     
     if row["Type"] == "overlap":
         bar_color = "red"
+        opacity=1
     else:
         bar_color = next(color_cycle)
-        
+        opacity=0.5
+    
     ax.barh(
         y=row["Type"],
         width=row["End"] - row["Start"],
         left=row["Start"],
         color=bar_color,
-        edgecolor="black"
+        edgecolor="black",
+        alpha=opacity
     )
     ax.text(
         x=row["Start"] + (row["End"] - row["Start"]) / 2,
@@ -475,8 +478,11 @@ ax.invert_yaxis()  # Gantt style
 ax.set_xlabel("Time")
 plt.tight_layout()
 
-st.subheader("Proposed Schedule Timeline")
+st.markdown("### Proposed Schedule Timeline")
 st.pyplot(fig)
+
+if marker==True:
+    st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
 
 
 st.text("")
