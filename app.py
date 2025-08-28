@@ -231,7 +231,10 @@ def validate(reqs,sched):
                 new_gap["type"]="overlap"
                 gapstart=sched[i+1]["start"]
                 new_gap["start"]=gapstart
-                gapend=sched[i]["end"]
+                if timediff(sched[i]["end"],sched[i+1]["end"])[0]>0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]>0:
+                    gapend=sched[i+1]["end"]
+                if timediff(sched[i]["end"],sched[i+1]["end"])[0]<0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]<0:
+                    gapend=sched[i]["end"]
                 new_gap["end"]=gapend
                 new_gap["length"]=-(60*timediff(gapstart,gapend)[0]+timediff(gapstart,gapend)[1])
                 j-=1
@@ -519,9 +522,9 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
 
 
-    ax.text(row["Start"], -0.55, row["Start"].strftime("%H:%M"),
+    ax.text(row["Start"], -0.5, row["Start"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
-    ax.text(row["End"], -0.55, row["End"].strftime("%H:%M"),
+    ax.text(row["End"], -0.5, row["End"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
 
 
