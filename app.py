@@ -466,7 +466,7 @@ for _, row in df_copy.iterrows():
             y=row["Type"],
             width=row["End"] - row["Start"],
             left=row["Start"],
-            color=color_dict[y],
+            color=color_dict[row["Type"]],
             edgecolor="black",
             alpha=0.6
         )
