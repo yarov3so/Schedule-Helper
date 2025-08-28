@@ -316,7 +316,7 @@ edited_df = st.data_editor(
     column_config={
         "Type": st.column_config.SelectboxColumn(
             "Type",
-            options=list(set(reqs.keys())-{None}),  # only allow valid period types
+            options=list(reqs.keys()),  # only allow valid period types
             help="Select the type of period"
         ),
         "Ignore?": st.column_config.CheckboxColumn(
