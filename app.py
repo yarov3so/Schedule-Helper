@@ -434,7 +434,7 @@ if type(schedule)==list:
 
 
 
-
+plt.rcParams["font.family"] = "Source Sans Pro"
 
 # Convert strings to datetime objects (only time, same day)
 df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
@@ -450,10 +450,9 @@ for _, row in df_copy.iterrows():
     
     if row["Type"] == "overlap":
         bar_color = "red"
-        opacity=1
     else:
         bar_color = next(color_cycle)
-        opacity=0.5
+
     
     ax.barh(
         y=row["Type"],
@@ -461,7 +460,7 @@ for _, row in df_copy.iterrows():
         left=row["Start"],
         color=bar_color,
         edgecolor="black",
-        alpha=opacity
+        alpha=0.6
     )
     ax.text(
         x=row["Start"] + (row["End"] - row["Start"]) / 2,
