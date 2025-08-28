@@ -1,6 +1,11 @@
 import pandas as pd
 import streamlit as st
 from datetime import time
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime
+import itertools
 
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
@@ -429,13 +434,6 @@ if type(schedule)==list:
 if marker==True:
     st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
 
-
-
-
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from datetime import datetime
-import itertools
 
 
 # Convert strings to datetime objects (only time, same day)
