@@ -475,7 +475,7 @@ for i in range(ntypes):
 
 for _, row in df_copy.iterrows():
     
-    label = "\n".join(textwrap.wrap(row["Name"], width=15))+f"{row["Start"]}&mdash{row["End"]}"+f"\n({row["Length (minutes)"]} minutes)"
+    label = "\n".join(textwrap.wrap(row["Name"], width=15))+f"{row["Start"].strftime("%H:%M")}—{row["End"].strftime("%H:%M")}"+f"\n({row["Length (minutes)"]} minutes)"
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
@@ -514,9 +514,9 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
 
 
-    ax.text(row["Start"], -0.7, row["Start"].strftime("%H:%M"),
+    ax.text(row["Start"], -0.3, row["Start"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
-    ax.text(row["End"], -0.7, row["End"].strftime("%H:%M"),
+    ax.text(row["End"], -0.3, row["End"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
 
 
