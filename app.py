@@ -85,6 +85,8 @@ def fill_blanks(reqs,sched):
             if period["length"]!=None:
                 rem_req-=period["length"]
                 j+=1
+
+        rem_req=int(rem_req)
                 
         if rem_req<0:
             marker=False
