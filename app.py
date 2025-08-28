@@ -221,14 +221,19 @@ def validate(reqs,sched):
         sched_with_gaps.append(sched[i])
         if i<len(sched)-1 and sched[i+1]["start"]!=sched[i]["end"]:
             gaps.append((sched[i]["end"],sched[i+1]["end"])) #
-            new_gap={"name":"Gap "+str(j),"type":"gap","start":sched[i]["end"],"length":60*timediff(sched[i+1]["start"],sched[i]["end"])[0]+timediff(sched[i+1]["start"],sched[i]["end"])[1],"end":sched[i+1]["start"]}
+            gapstart=sched[i]["end"]
+            gapend=sched[i+1]["start"]
+            
+            new_gap={"name":"Gap "+str(j),"type":"gap","start":gapstart,"length":60*timediff(gapend,gapstart)[0]+timediff(gapend,gapstart)[1],"end":gapend}
             
             if new_gap["length"]<0:
                 new_gap["name"]="Overlap "+str(k)
                 new_gap["type"]="overlap"
-                new_gap["start"]=sched[i+1]["start"]
-                new_gap["end"]=sched[i]["end"]
-                new_gap["length"]=-(60*timediff(sched[i+1]["start"],sched[i]["end"])[0]+timediff(sched[i+1]["start"],sched[i]["end"])[1])
+                gapstart=sched[i+1]["start"]
+                new_gap["start"]=gapstart
+                gapend=sched[i]["end"]
+                new_gap["end"]=gapend
+                new_gap["length"]=-(60*timediff(gapstart,gapend)[0]+timediff(gapstart,gapend)[1])
                 j-=1
                 k+=1
                 
