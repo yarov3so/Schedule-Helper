@@ -415,7 +415,7 @@ st.markdown("### Proposed Schedule")
 
 df.columns=["name","type","start","length","end"]
 
-st.dataframe(df)
+st.text(df.to_dict(orient="records"))
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
