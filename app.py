@@ -261,7 +261,7 @@ if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
         "Type of period": "",
         "Total required time (minutes)": "",
-        #"Ignore?": False
+        "Ignore?": False
     }])
 
 st.markdown("Enter the types of periods that will appear in your schedule (e.g. teaching, duty, lunch, etc.) in the table below. Be sure to avoid using \"gap\" and \"overlap\" as names for period types.")
@@ -271,13 +271,13 @@ edited_df_reqs = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     width="stretch",
     hide_index=True,
-    # column_config={
-    #     "Ignore?": st.column_config.CheckboxColumn(
-    #         "Ignore?",
-    #         help="Check to ignore this type of period (deleting rows is not possible)",
-    #         default=False  # ensures new rows have unchecked boxes
-    #     )
-    # }
+    column_config={
+        "Ignore?": st.column_config.CheckboxColumn(
+            "Ignore?",
+            help="Check to ignore this type of period (deleting rows is not possible)",
+            default=False  # ensures new rows have unchecked boxes
+        )
+    }
 )
 
 
@@ -285,18 +285,21 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
     st.error("Duplicate types of period detected! Please specify each type of period only once.")
     st.stop()
 
-#reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
-reqs=dict(zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]))
+reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
+#reqs=dict(zip(edited_df_reqs["Type of period"],edited_df_reqs["Total required time (minutes)"]))
 
 
 if len(reqs)==0:
+    st.stop()
+
+if "" in reqs.keys():
     st.stop()
     
 
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
-        if type(reqs[el])!=int:
+        if type(reqs[el])!=int and reqs[el]!=None and reqs[el]!="":
             st.warning("Use only whole numbers in the 'Total time required (minutes)' column!")
             st.stop()
     except:
