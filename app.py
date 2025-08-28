@@ -339,6 +339,8 @@ edited_df = st.data_editor(
     }
 )
 
+st.session_state.df_user = edited_df.copy()
+
 #st.session_state.df_user = edited_df
 
 edited_df["Name"] = edited_df["Name"].fillna("")
