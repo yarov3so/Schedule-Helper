@@ -514,9 +514,9 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
 
 
-    ax.text(row["Start"], -0.5, row["Start"].strftime("%H:%M"),
+    ax.text(row["Start"], -0.6, row["Start"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
-    ax.text(row["End"], -0.5, row["End"].strftime("%H:%M"),
+    ax.text(row["End"], -0.6, row["End"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=8)
 
 
