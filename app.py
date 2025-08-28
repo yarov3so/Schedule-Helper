@@ -475,7 +475,7 @@ for i in range(ntypes):
 
 for _, row in df_copy.iterrows():
     
-    label = "\n".join(textwrap.wrap(row["Name"], width=15))+f"\n({row["Length (minutes)"]} minutes)"
+    label = "\n".join(textwrap.wrap(row["Name"], width=15))+f"{row["Start"]}&mdash{row["End"]}"+f"\n({row["Length (minutes)"]} minutes)"
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
@@ -508,6 +508,18 @@ for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
         color="blue", alpha=0.1  # semi-transparent red
     )
 
+for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
+    # Vertical red lines at start and end
+    ax.axvline(row["Start"], color="red", linestyle="--", linewidth=1.5)
+    ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
+
+
+    ax.text(row["Start"], -0.7, row["Start"].strftime("%H:%M"),
+            rotation=90, va="bottom", ha="center", color="red", fontsize=8)
+    ax.text(row["End"], -0.7, row["End"].strftime("%H:%M"),
+            rotation=90, va="bottom", ha="center", color="red", fontsize=8)
+
+
 # Format x-axis as time
 ax.xaxis_date()
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
@@ -515,6 +527,7 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
 ax.invert_yaxis()  # Gantt style
 ax.set_xlabel("Time")
 plt.tight_layout()
+
 
 st.markdown("### Proposed Schedule Timeline")
 st.pyplot(fig)
