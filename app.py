@@ -296,7 +296,7 @@ if len(reqs)==0:
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
-        if type(reqs[el])!=int and :
+        if type(reqs[el])!=int:
             st.error("Use only whole numbers in the 'Total time required (minutes)' column!")
             st.stop()
     except:
