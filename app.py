@@ -430,6 +430,56 @@ if marker==True:
     st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
 
 
+
+
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from datetime import datetime
+import itertools
+
+
+# Convert strings to datetime objects (only time, same day)
+df["Start"] = pd.to_datetime(df["Start"], format="%H:%M")
+df["End"] = pd.to_datetime(df["End"], format="%H:%M")
+
+colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+color_cycle = itertools.cycle(colors_list)
+
+fig, ax = plt.subplots(figsize=(8, 4))
+
+for _, row in df.iterrows():
+    
+    if row["Type"] == "overlap":
+        bar_color = "red"
+    else:
+        bar_color = next(color_cycle)
+        
+    ax.barh(
+        y=row["Type"],
+        width=row["End"] - row["Start"],
+        left=row["Start"],
+        color=bar_color,
+        edgecolor="black"
+    )
+    ax.text(
+        x=row["Start"] + (row["End"] - row["Start"]) / 2,
+        y=row["Type"],
+        s=row["Name"],
+        va='center', ha='center', color='black'
+    )
+
+# Format x-axis as time
+ax.xaxis_date()
+ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+
+ax.invert_yaxis()  # Gantt style
+ax.set_xlabel("Time")
+plt.tight_layout()
+
+st.subheader("Proposed Schedule Timeline")
+st.pyplot(fig)
+
+
 st.text("")
 st.markdown("""*Crafted by yarov3so*   
 <a href="https://www.buymeacoffee.com/yarov3so" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="width: 9em; height: auto; padding-top: 0.7em; padding-bottom: 1em" ></a>  
