@@ -220,8 +220,13 @@ def validate(reqs,sched):
     for i in range(len(sched)):
         sched_with_gaps.append(sched[i])
         if i<len(sched)-1 and sched[i+1]["start"]!=sched[i]["end"]:
-            gaps.append((sched[i]["end"],sched[i+1]["end"])) #
-            gapstart=sched[i]["end"]
+            #gaps.append((sched[i]["end"],sched[i+1]["end"])) #
+            if (i-1)>=0 and sched_with_gaps[-2]["type"]=="overlap":
+                if sched_with_gaps[-1]["end"]==sched_with_gaps[-2]["end"]:
+                    gapstart=sched_with_gaps[-3]["end"]
+            else:
+                gapstart=sched[i]["end"]
+                    
             gapend=sched[i+1]["start"]
             
             new_gap={"name":"Gap "+str(j),"type":"gap","start":gapstart,"length":60*timediff(gapend,gapstart)[0]+timediff(gapend,gapstart)[1],"end":gapend}
