@@ -340,8 +340,7 @@ edited_df = st.data_editor(
     }
 )
 
-if not edited_df.equals(st.session_state.df_user):
-    st.session_state.df_user = edited_df.copy()
+st.session_state.df_user = edited_df
 
 #st.session_state.df_user = edited_df
 
