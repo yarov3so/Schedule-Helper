@@ -83,11 +83,11 @@ def fill_blanks(reqs,sched):
         rem_req=reqs[typ]
         j=0
         for period in sched_typ:
-            st.text(period["length"])
+            
             if period["length"] is not None and not math.isnan(period["length"]):
                 rem_req-=int(period["length"])
                 j+=1
-        st.text(rem_req)
+    
         rem_req=int(rem_req)
                 
         if rem_req<0:
@@ -118,13 +118,13 @@ def fill_blanks(reqs,sched):
                 st.success(f"Allocating the remaining {rem_req} minutes of period type \'{typ}\' almost evenly to the following periods: {allocation_str}")
 
             #Need to create a list of these flexible periods...
-            sched_typ_flex=[period for period in sched_typ if (period["start"]==None and period["length"]==None) or (period["end"]==None and period["length"]==None)]
+            sched_typ_flex=[period for period in sched_typ if ((period["start"]==None or math.isnan(period["start"])) and (period["length"]==None or math.isnan(period["length"]))) or ((period["end"]==None or math.isnan(period["end"])) and (period["length"]==None or math.isnan(period["length"])))]
             for period in sched_typ_flex:
-                if period["start"]==None and period["length"]==None:
+                if ((period["start"]==None or math.isnan(period["start"])) and (period["length"]==None or math.isnan(period["length"]))):
                     period["length"]=0
                     period["start"]= period["end"]
                     period["init"]="end"
-                if period["end"]==None and period["length"]==None:
+                if ((period["end"]==None or math.isnan(period["end"])) and (period["length"]==None or math.isnan(period["length"]))):
                     period["length"]=0
                     period["end"]= period["start"]
                     period["init"]="start"
@@ -265,7 +265,7 @@ def try_int(mystring):
 
 reqs={}
 
-#st.session_state.clear()
+st.session_state.clear()
 
 if "df_reqs" not in st.session_state:
     st.session_state.df_reqs = pd.DataFrame([{
@@ -466,7 +466,7 @@ st.text(color_dict)
 
 for _, row in df_copy.iterrows():
     
-    label = "\n".join(textwrap.wrap(row["Name"], width=15))
+    label = "\n".join(textwrap.wrap(row["Name"]+f" ({row["Length (minutes)"]} minutes)", width=15))
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
