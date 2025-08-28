@@ -428,6 +428,7 @@ if type(schedule)==list:
     df.length=df.length.astype(str)
 
     df.columns=["Name","Type","Start","Length (minutes)","End"]
+    df_copy=df.copy()
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
 
@@ -437,15 +438,15 @@ if marker==True:
 
 
 # Convert strings to datetime objects (only time, same day)
-df["Start"] = pd.to_datetime(df["Start"], format="%H:%M")
-df["End"] = pd.to_datetime(df["End"], format="%H:%M")
+df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
+df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 
 colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
 color_cycle = itertools.cycle(colors_list)
 
 fig, ax = plt.subplots(figsize=(8, 4))
 
-for _, row in df.iterrows():
+for _, row in df_copy.iterrows():
     
     if row["Type"] == "overlap":
         bar_color = "red"
