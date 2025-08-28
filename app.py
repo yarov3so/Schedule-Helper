@@ -287,17 +287,19 @@ if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
 
 reqs=dict(zip(edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Type of period"],edited_df_reqs[edited_df_reqs["Ignore?"]==False]["Total required time (minutes)"]))
 
-if len(reqs)==0:
-    st.stop()
+# if len(reqs)==0:
+#     st.stop()
     
 
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
         if type(reqs[el])!=int:
-            st.stop()
+            st.error("Use only whole numbers in the 'Total time required (minutes)' column! ")
+            #st.stop()
     except:
-        st.stop()
+        pass
+        #st.stop()
 
 if "df_user" not in st.session_state:
     st.session_state.df_user = pd.DataFrame(columns=["Name", "Type", "Start", "Length (minutes)","End","Ignore?"])
