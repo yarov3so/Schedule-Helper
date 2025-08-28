@@ -449,7 +449,8 @@ fig, ax = plt.subplots(figsize=(8, 4))
 
 color_dict={}
 
-types=sorted(list(df_copy["Type"]))
+types=sorted(list(df["Type"]))
+st.text(types)
 ntypes=len(types)
 
 for i in range(ntypes):
@@ -459,7 +460,7 @@ for i in range(ntypes):
 
 for _, row in df_copy.iterrows():
     
-    label = "\n".join(textwrap.wrap(row["Name"], width=10))
+    label = "\n".join(textwrap.wrap(row["Name"], width=15))
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
@@ -473,6 +474,7 @@ for _, row in df_copy.iterrows():
             color=color_dict[row["Type"]],
             edgecolor="black",
             alpha=0.6
+            height=0.6
         )
         ax.text(
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
