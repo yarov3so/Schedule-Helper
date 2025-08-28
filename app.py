@@ -299,7 +299,7 @@ if "" in reqs.keys():
 for el in reqs:
     try:
         reqs[el]=try_int(reqs[el].replace(" ",""))
-        if type(reqs[el])!=int and reqs[el]!=None and reqs[el]!="":
+        if type(reqs[el])!=int or reqs[el]==None or reqs[el]=="":
             st.warning("Use only whole numbers in the 'Total time required (minutes)' column!")
             st.stop()
     except:
@@ -319,7 +319,6 @@ edited_df = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     width="stretch",
     hide_index=True,
-    key="df_user_editor",
     column_config={
         "Type": st.column_config.SelectboxColumn(
             "Type",
