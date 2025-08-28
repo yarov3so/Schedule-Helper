@@ -475,7 +475,7 @@ for i in range(ntypes):
 
 for _, row in df_copy.iterrows():
     
-    label = "\n".join(textwrap.wrap(row["Name"]+f" ({row["Length (minutes)"]} minutes)", width=15))
+    label = "\n".join(textwrap.wrap(row["Name"], width=15))+f"\n({row["Length (minutes)"]} minutes)"
     
     # if row["Type"] == "overlap":
     #     bar_color = "red"
