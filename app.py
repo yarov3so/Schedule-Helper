@@ -84,7 +84,7 @@ def fill_blanks(reqs,sched):
         for period in sched_typ:
             st.text(period["length"])
             if period["length"]!=None:
-                rem_req-=period["length"]
+                rem_req-=int(period["length"])
                 j+=1
         st.text(rem_req)
         rem_req=int(rem_req)
