@@ -119,8 +119,6 @@ def fill_blanks(reqs,sched):
 
             #Need to create a list of these flexible periods...
             sched_typ_flex=[period for period in sched_typ if (period["start"]==None and period["length"]==None ) or (period["end"]==None and period["length"]==None)]
-            st.text(sched_typ)
-            st.text(sched_typ_flex)
             for period in sched_typ_flex:
                 if period["start"]==None and period["length"]==None:
                     period["length"]=0
@@ -416,6 +414,8 @@ st.text("")
 st.markdown("### Proposed Schedule")
 
 df.columns=["name","type","start","length","end"]
+
+st.dataframe(df)
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
