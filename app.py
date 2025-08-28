@@ -295,7 +295,7 @@ if len(reqs)==0:
 if "" in reqs.keys():
     st.stop()
 
-if "" in reqs.values() or None in reqs.values:
+if "" in reqs.values() or None in reqs.values():
     st.stop()
 
 
