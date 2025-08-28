@@ -7,6 +7,7 @@ import matplotlib.dates as mdates
 from datetime import datetime
 import itertools
 import textwrap
+import math
 
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
@@ -83,7 +84,7 @@ def fill_blanks(reqs,sched):
         j=0
         for period in sched_typ:
             st.text(period["length"])
-            if period["length"]!=None:
+            if period["length"] is not None and not math.isnan(period["length"]):
                 rem_req-=int(period["length"])
                 j+=1
         st.text(rem_req)
