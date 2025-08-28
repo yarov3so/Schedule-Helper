@@ -383,8 +383,8 @@ for idx in df[["Start","Length (minutes)","End"]].index: #df[["Start","Length (m
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
 
-for idx in df[["Type"]].index:
-    if df[["Type"]].loc[idx].isnull().all():
+for el in df["Type"]:
+    if el not in reqs.keys():
         st.warning("Please remember to specify the type of each period listed above.")
         st.stop()
 
