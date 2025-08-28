@@ -469,13 +469,9 @@ color_dict={}
 types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
 ntypes=len(types)
 
-st.text(types)
-
 
 for i in range(ntypes):
     color_dict[types[i]]=colors_list[i%(len(colors_list))]
-
-st.text(color_dict)
 
 for _, row in df_copy.iterrows():
     
