@@ -352,9 +352,9 @@ if df_output.empty:
 if "" in df_output["Type"]:
     st.stop()
 
-if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
-    #st.warning("Only use the active period types you specified in the beginning!")
-    st.stop()
+# if set(df_output["Type"]).issubset(set(reqs.keys()))==False:
+#     #st.warning("Only use the active period types you specified in the beginning!")
+#     st.stop()
 
 
 #st.dataframe(df_output,hide_index=True)
