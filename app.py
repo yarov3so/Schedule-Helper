@@ -346,8 +346,9 @@ edited_df["Type"] = edited_df["Type"].fillna("")
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 
-# if df_output.empty:
-#     st.stop()
+if df_output.empty:
+    st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
+    st.stop()
 
 # if "" in df_output["Type"]:
 #     st.stop()
