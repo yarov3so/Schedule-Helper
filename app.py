@@ -351,7 +351,7 @@ edited_df = st.data_editor(
             "Start",
             help="Enter the start time HH:MM or leave blank"
         ),
-        "Length (minutes)": st.column_config.TextColumn( #numbercolumn
+        "Length (minutes)": st.column_config.NumberColumn( #numbercolumn
             "Length (minutes)",
             help="Enter the duration of the period in minutes or leave blank"
         )
@@ -392,7 +392,7 @@ def comprehend(mystring):
 df=df_output.copy()
 df["Start"]=df["Start"].apply(comprehend)
 df["End"]=df["End"].apply(comprehend)
-df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
+#df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
 
 
@@ -415,7 +415,17 @@ st.markdown("### Proposed Schedule")
 
 df.columns=["name","type","start","length","end"]
 
+df_todict=df.to_dict(orient="records")
+df_todict_len=len(df_todict)
+for i in range(df_todict_len):
+    curr=df_todict[i]["length"]
+    if isinstance(curr,float) and math.isnan(curr):
+        df_todict[i]["length"]=None
+    else:
+        df_todict[i]["length"]=try_int(curr)
+        
 st.text(df.to_dict(orient="records"))
+
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
