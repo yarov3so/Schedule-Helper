@@ -497,6 +497,17 @@ for _, row in df_copy.iterrows():
             va='center', ha='center', color='black'
         )
 
+for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
+    ax.axvspan(
+        row["Start"], row["End"],
+        color="red", alpha=0.4  # semi-transparent red
+    )
+for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
+    ax.axvspan(
+        row["Start"], row["End"],
+        color="blue", alpha=0.4  # semi-transparent red
+    )
+
 # Format x-axis as time
 ax.xaxis_date()
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
