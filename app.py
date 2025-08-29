@@ -537,12 +537,16 @@ if type(schedule)==list:
     df.start=df.start.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
     df.end=df.end.apply(lambda t: time(t[0], t[1])).apply(lambda t: t.strftime("%H:%M"))
     df.length=df.length.astype(str)
-
+    df_csv=df.copy()
+    df_csv["start"] = df_csv["start"].dt.strftime("%H:%M")  
+    df_csv["end"] = df_csv["end"].dt.strftime("%H:%M")
+    
+    df_csv.columns=["Name","Type","Start","Length (minutes)","End"]
     df.columns=["Name","Type","Start","Length (minutes)","End"]
+    
     df_copy=df.copy()
     df_csv=df.copy()
-    df_csv["Start"] = df_csv["Start"].dt.strftime("%H:%M")  
-    df_csv["End"] = df_csv["End"].dt.strftime("%H:%M")
+    
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
     
