@@ -244,7 +244,7 @@ def validate(reqs,sched):
         for period in [period in sched_with_gaps if period["type"]!="overlap" and period["type"]!="gap"]:
             if latest(sched[i+1]["start"],period["end"])==period["end"] and sched[i+1]["start"]!=period["end"] :
                 overlapstart=sched[i+1]["start"]
-                if latest(sched[i+1]["end"],period["end"])==period["end"]):
+                if latest(sched[i+1]["end"],period["end"])==period["end"]:
                     overlapend=sched[i+1]["end"]
                 else:
                     overlapend=period["end"]
