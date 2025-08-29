@@ -654,6 +654,15 @@ st.pyplot(fig)
 if marker==True:
     st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
 
+csv = df_copy.to_csv(index=False)
+
+
+st.download_button(
+    label="Download schedule as CSV",
+    data=csv,
+    file_name='schedule.csv',
+    mime='text/csv'
+)
 
 st.text("")
 st.markdown("""*Crafted by yarov3so*   
