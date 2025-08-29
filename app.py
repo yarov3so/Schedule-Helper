@@ -530,13 +530,13 @@ alpha = 0.6
 colors_list = [to_rgba(c, alpha=alpha) for c in colors_list]
 
 colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
-whiteness_factor = 0.6  # 0 = original color, 1 = full white
+# whiteness_factor = 0.6  # 0 = original color, 1 = full white
 
-colors_list = [lighten_color(c, amount=whiteness_factor) for c in colors_list[:]]
+# colors_list = [lighten_color(c, amount=whiteness_factor) for c in colors_list[:]]
 
 
 # Incorporate alpha into colors
-colors_with_alpha = [to_rgba(c, alpha=alpha) for c in colors_list]
+#colors_with_alpha = [to_rgba(c, alpha=alpha) for c in colors_list]
 
 #color_cycle = itertools.cycle(colors_list)
 
@@ -566,7 +566,7 @@ for _, row in df_copy.iterrows():
             left=row["Start"],
             color=color_dict[row["Type"]],
             edgecolor="black",
-            #alpha=0.6,
+            alpha=0.6,
             zorder=2
         )
         ax.text(
