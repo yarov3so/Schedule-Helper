@@ -433,6 +433,8 @@ edited_df = st.data_editor(
 
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
+df["Start"] = df["Start"].str.strip()
+df["End"] = df["End"].str.strip()
 
 edited_df = edited_df.replace("", None)
 
