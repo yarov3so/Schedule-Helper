@@ -450,7 +450,10 @@ def comprehend(mystring):
     data=[]
     try:
         data_list=mystring.replace(" ", "")
-        data_list=mystring.split(":")
+        if "h" in mystring:
+            data_list=mystring.split("h")
+        elif ":" in mystring:
+            data_list=mystring.split(":")
         for num in data_list:
             data.append(int(num))
     except:
