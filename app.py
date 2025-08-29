@@ -553,7 +553,7 @@ for _, row in df_copy.iterrows():
             y=row["Type"],
             s=label, #row["Name"],
             va='center', ha='center', color='black',
-            bbox=dict(facecolor="white", alpha=0.3, edgecolor="none", boxstyle="round,pad=0.3"),
+            bbox=dict(facecolor="white", alpha=0.5, edgecolor="none", boxstyle="round,pad=0.5"),
             zorder=3
         )
 
@@ -573,6 +573,11 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     # Vertical red lines at start and end
     ax.axvline(row["Start"], color="red", linestyle="--", linewidth=1.5)
     ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
+
+for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
+    # Vertical red lines at start and end
+    ax.axvline(row["Start"], color="blue", linestyle="--", linewidth=1.5)
+    ax.axvline(row["End"], color="blue", linestyle="--", linewidth=1.5)
 
 
     ax.text(row["Start"], -0.7, row["Start"].strftime("%H:%M"),
