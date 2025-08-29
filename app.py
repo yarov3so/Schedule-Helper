@@ -37,7 +37,7 @@ def latest(time1,time2):
         return time1
     elif timediff(time2,time1)[0]>0 or timediff(time2,time1)[1]>0:
         return time2
-    else
+    else:
         return time1
 
 def maxtime(timelist):
