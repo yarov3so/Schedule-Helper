@@ -438,8 +438,6 @@ edited_df["End"] = edited_df["End"].str.strip()
 
 edited_df = edited_df.replace("", None)
 
-st.text(edited_df)
-
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 
 if df_output.empty:
