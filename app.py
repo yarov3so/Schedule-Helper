@@ -541,6 +541,8 @@ if type(schedule)==list:
     df.columns=["Name","Type","Start","Length (minutes)","End"]
     df_copy=df.copy()
     df_csv=df.copy()
+    df_csv["Start"] = df_csv["Start"].dt.strftime("%H:%M")  
+    df_csv["End"] = df_csv["End"].dt.strftime("%H:%M")
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
     
