@@ -207,7 +207,7 @@ def validate(reqs,sched):
                     badperiods_.append(sched[i]["name"]
         except:
             continue
-    if len(badperiods)!=0:
+    if len(badperiods_)!=0:
         badperiods_str_=""
         for bp in badperiods_:
             badperiods_str_+=(bp+", ")
