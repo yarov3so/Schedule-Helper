@@ -204,7 +204,7 @@ def validate(reqs,sched):
         try:
             if sched[i]["start"]!=None and sched[i]["end"]!=None and sched[i]["length"]!=None:
                 if timesum(sched[i]["start"],(0,sched[i]["length"]))!=sched[i]["end"]:
-                    badperiods_.append(sched[i]["name"]
+                    badperiods_.append(sched[i]["name"])
         except:
             continue
     if len(badperiods_)!=0:
