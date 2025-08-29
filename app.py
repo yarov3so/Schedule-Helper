@@ -551,7 +551,7 @@ for _, row in df_copy.iterrows():
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
             y=row["Type"],
             s=label, #row["Name"],
-            va='center', ha='center', color='black'
+            va='center', ha='center', color='black',
             bbox=dict(facecolor="white", alpha=0.2, edgecolor="none", boxstyle="round,pad=0.2")
         )
 
