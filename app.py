@@ -8,6 +8,7 @@ from datetime import datetime
 import itertools
 import textwrap
 import math
+from functools import reduce
 
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
@@ -30,6 +31,18 @@ def timediff(time1,time2):
 
 def minutes(time):
     return(time[1]+60*time[0])
+
+def latest(time1,time2):
+    if timediff(time1,time2)[0]>0 or timediff(time1,time2)[1]>0:
+        return time1
+    elif timediff(time2,time1)[0]>0 or timediff(time2,time1)[1]>0:
+        return time2
+    else
+        return time1
+
+def maxtime(timelist):
+    return reduce(latest,timelist)
+
 
 def overlap(inv1,inv2):
 
@@ -219,36 +232,61 @@ def validate(reqs,sched):
     k=1
     for i in range(len(sched)):
         sched_with_gaps.append(sched[i])
-        if i<len(sched)-1 and sched[i+1]["start"]!=sched[i]["end"]:
-            #gaps.append((sched[i]["end"],sched[i+1]["end"])) #
-            if (i-1)>=0 and sched_with_gaps[-2]["type"]=="overlap":
-                if sched_with_gaps[-1]["end"]==sched_with_gaps[-2]["end"]:
-                    gapstart=sched_with_gaps[-3]["end"]
-            else:
-                gapstart=sched[i]["end"]
-                    
+
+        if latest(sched[i+1]["start"],maxtime([period["end"] for period in sched_with_gaps]))==sched[i+1]["start"] and sched[i+1]["start"]!=maxtime([period["end"] for period in sched_with_gaps]):
+            gapstart=maxtime([period["end"] for period in sched_with_gaps])
             gapend=sched[i+1]["start"]
-            
             new_gap={"name":"Gap "+str(j),"type":"gap","start":gapstart,"length":60*timediff(gapend,gapstart)[0]+timediff(gapend,gapstart)[1],"end":gapend}
-            
-            if new_gap["length"]<0:
-                new_gap["name"]="Overlap "+str(k)
-                new_gap["type"]="overlap"
-                gapstart=sched[i+1]["start"]
-                new_gap["start"]=gapstart
-                if timediff(sched[i]["end"],sched[i+1]["end"])[0]>0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]>0:
-                    gapend=sched[i+1]["end"]
-                if timediff(sched[i]["end"],sched[i+1]["end"])[0]<0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]<0:
-                    gapend=sched[i]["end"]
-                new_gap["end"]=gapend
-                new_gap["length"]=-(60*timediff(gapstart,gapend)[0]+timediff(gapstart,gapend)[1])
-                j-=1
-                k+=1
-                
             sched_with_gaps_old=sched_with_gaps[:]
             sched_with_gaps.append(new_gap)
-            
             j+=1
+            
+        for period in [period in sched_with_gaps if period["type"]!="overlap" and period["type"]!="gap"]:
+            if latest(sched[i+1]["start"],period["end"])==period["end"] and sched[i+1]["start"]!=period["end"] :
+                overlapstart=sched[i+1]["start"]
+                if latest(sched[i+1]["end"],period["end"])==period["end"]):
+                    overlapend=sched[i+1]["end"]
+                else:
+                    overlapend=period["end"]
+                new_overlap={"name":"Overlap "+str(k),"type":"overlap","start":overlapstart,"length":60*timediff(overlapend,overlapstart)[0]+timediff(overlapend,overlapstart)[1],"end":overlapend}
+                sched_with_gaps_old=sched_with_gaps[:]
+                sched_with_gaps.append(new_overlap)
+                k+=1
+                
+        
+        # elif latest(sched[i+1]["start"],maxtime([period["end"] for period in sched_with_gaps]))==sched[i+1]["start"] and sched[i+1]["start"]!=maxtime([period["end"] for period in sched_with_gaps]):
+        #     if latest(sched[i+1]["end"],maxtime(sched_with_gaps))==sched[i+1]["end"]:
+        #         gapstart=
+        # if i<len(sched)-1 and sched[i+1]["start"]!=sched[i]["end"]:
+        #     #gaps.append((sched[i]["end"],sched[i+1]["end"])) #
+        #     if (i-1)>=0 and sched_with_gaps[-2]["type"]=="overlap":
+        #         if sched_with_gaps[-1]["end"]==sched_with_gaps[-2]["end"]:
+        #             gapstart=sched_with_gaps[-3]["end"]
+        #     else:
+        #         gapstart=sched[i]["end"]
+                    
+        #     gapend=sched[i+1]["start"]
+            
+        #     new_gap={"name":"Gap "+str(j),"type":"gap","start":gapstart,"length":60*timediff(gapend,gapstart)[0]+timediff(gapend,gapstart)[1],"end":gapend}
+            
+        #     if new_gap["length"]<0:
+        #         new_gap["name"]="Overlap "+str(k)
+        #         new_gap["type"]="overlap"
+        #         gapstart=sched[i+1]["start"]
+        #         new_gap["start"]=gapstart
+        #         if timediff(sched[i]["end"],sched[i+1]["end"])[0]>0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]>0:
+        #             gapend=sched[i+1]["end"]
+        #         if timediff(sched[i]["end"],sched[i+1]["end"])[0]<0 or timediff(sched[i]["end"],sched[i+1]["end"])[1]<0:
+        #             gapend=sched[i]["end"]
+        #         new_gap["end"]=gapend
+        #         new_gap["length"]=-(60*timediff(gapstart,gapend)[0]+timediff(gapstart,gapend)[1])
+        #         j-=1
+        #         k+=1
+                
+        #     sched_with_gaps_old=sched_with_gaps[:]
+        #     sched_with_gaps.append(new_gap)
+            
+        #     j+=1
 
     if sched_with_gaps!=sched:
         marker=False
