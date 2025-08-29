@@ -11,6 +11,14 @@ import math
 from functools import reduce
 from matplotlib.colors import to_rgba
 
+def lighten_color(color, amount=0.5):
+
+    r, g, b, a = to_rgba(color)
+    r = r + (1 - r) * amount
+    g = g + (1 - g) * amount
+    b = b + (1 - b) * amount
+    return (r, g, b, a)
+
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
     minsum=time1[1]+time2[1]
@@ -520,6 +528,12 @@ df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
 alpha = 0.6
 colors_list = [to_rgba(c, alpha=alpha) for c in colors_list]
+
+colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+whiteness_factor = 0.6  # 0 = original color, 1 = full white
+
+colors_list = [lighten_color(c, amount=whiteness_factor) for c in colors_list[:]]
+
 
 # Incorporate alpha into colors
 colors_with_alpha = [to_rgba(c, alpha=alpha) for c in colors_list]
