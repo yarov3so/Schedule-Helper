@@ -552,6 +552,7 @@ for _, row in df_copy.iterrows():
             y=row["Type"],
             s=label, #row["Name"],
             va='center', ha='center', color='black'
+            bbox=dict(facecolor="white", alpha=0.2, edgecolor="none", boxstyle="round,pad=0.2")
         )
 
 for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
