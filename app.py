@@ -341,13 +341,13 @@ edited_df_reqs = st.data_editor(
     num_rows="dynamic",  # lets user add rows directly
     width="stretch",
     hide_index=True,
-    # column_config={
-    #     "Ignore?": st.column_config.CheckboxColumn(
-    #         "Ignore?",
-    #         help="Check to ignore this type of period (deleting rows is not possible)",
-    #         default=False  # ensures new rows have unchecked boxes
-    #     )
-    # }
+    column_config={
+        "Total required time (minutes)": st.column_config.NumberColumn( #numbercolumn
+            "Total required time (minutes)",
+            min_value=0,
+            step=1
+        )
+    }
 )
 
 
