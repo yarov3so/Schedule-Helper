@@ -546,7 +546,7 @@ for _, row in df_copy.iterrows():
             color=color_dict[row["Type"]],
             edgecolor="black",
             alpha=0.6,
-            zorder=1
+            zorder=2
         )
         ax.text(
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
@@ -561,7 +561,7 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvspan(
         row["Start"], row["End"],
         color="red", alpha=0.1,  # semi-transparent red
-        zorder=2
+        zorder=1
     )
 for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
     ax.axvspan(
