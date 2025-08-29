@@ -341,9 +341,10 @@ edited_df_reqs = st.data_editor(
     # }
 )
 
-if "overlap" in st.session_state.df_reqs or "gap" in st.session_state.df_reqs:
-    st.error("Please avoid using \"gap\" and \"overlap\" as names for period types!")
-    st.stop()
+st.text(edited_df_reqs["Type of period"])
+# if "overlap" in st.session_state.df_reqs or "gap" in st.session_state.df_reqs:
+#     st.error("Please avoid using \"gap\" and \"overlap\" as names for period types!")
+#     st.stop()
     
 
 if len(edited_df_reqs.index)!=len(set(edited_df_reqs["Type of period"])):
