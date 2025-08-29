@@ -434,12 +434,7 @@ edited_df = st.data_editor(
 edited_df["Name"] = edited_df["Name"].fillna("")
 edited_df["Type"] = edited_df["Type"].fillna("")
 
-for i in len(edited_df["Start"]):
-    if edited_df["Start"]=="":
-        edited_df["Start"]=None
-for i in len(edited_df["End"]):
-    if edited_df["End"]=="":
-        edited_df["End"]=None
+st.dataframe(edited_df)
 
 df_output=edited_df[(edited_df["Ignore?"] == False) | (edited_df["Ignore?"].isnull()) ].drop(columns=["Ignore?"])
 
