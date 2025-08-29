@@ -540,8 +540,10 @@ if type(schedule)==list:
 
     df.columns=["Name","Type","Start","Length (minutes)","End"]
     df_copy=df.copy()
+    df_csv=df.copy()
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
+    
 
 
 
@@ -654,7 +656,7 @@ st.pyplot(fig)
 if marker==True:
     st.success("**The current schedule is valid and optimal.&nbsp;** 🙌")
 
-csv = df_copy.to_csv(index=False)
+csv = df_csv.to_csv(index=False)
 
 
 st.download_button(
