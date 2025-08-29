@@ -233,7 +233,7 @@ def validate(reqs,sched):
     for i in range(len(sched)):
         sched_with_gaps.append(sched[i])
 
-        if latest(sched[i+1]["start"],maxtime([period["end"] for period in sched_with_gaps]))==sched[i+1]["start"] and sched[i+1]["start"]!=maxtime([period["end"] for period in sched_with_gaps]):
+        if i<len(sched)-1 and latest(sched[i+1]["start"],maxtime([period["end"] for period in sched_with_gaps]))==sched[i+1]["start"] and sched[i+1]["start"]!=maxtime([period["end"] for period in sched_with_gaps]):
             gapstart=maxtime([period["end"] for period in sched_with_gaps])
             gapend=sched[i+1]["start"]
             new_gap={"name":"Gap "+str(j),"type":"gap","start":gapstart,"length":60*timediff(gapend,gapstart)[0]+timediff(gapend,gapstart)[1],"end":gapend}
@@ -242,7 +242,7 @@ def validate(reqs,sched):
             j+=1
             
         for period in [period for period in sched_with_gaps if period["type"]!="overlap" and period["type"]!="gap"]:
-            if latest(sched[i+1]["start"],period["end"])==period["end"] and sched[i+1]["start"]!=period["end"] :
+            if i<len(sched)-1 and latest(sched[i+1]["start"],period["end"])==period["end"] and sched[i+1]["start"]!=period["end"] :
                 overlapstart=sched[i+1]["start"]
                 if latest(sched[i+1]["end"],period["end"])==period["end"]:
                     overlapend=sched[i+1]["end"]
