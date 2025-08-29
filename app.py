@@ -9,6 +9,7 @@ import itertools
 import textwrap
 import math
 from functools import reduce
+from matplotlib.colors import to_rgba
 
 def timesum(time1,time2):
     hrsum=(time1[0]+time2[0]) % 24
@@ -517,6 +518,12 @@ df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 
 #colors_list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#bcbd22","#17becf", "#e377c2", "#8c564b", "#7f7f7f", "#aec7e8"]
 colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+alpha = 0.6
+colors_list = [to_rgba(c, alpha=alpha) for c in colors_list]
+
+# Incorporate alpha into colors
+colors_with_alpha = [to_rgba(c, alpha=alpha) for c in colors_list]
+
 #color_cycle = itertools.cycle(colors_list)
 
 fig, ax = plt.subplots(figsize=(8, 4))
@@ -545,7 +552,7 @@ for _, row in df_copy.iterrows():
             left=row["Start"],
             color=color_dict[row["Type"]],
             edgecolor="black",
-            alpha=0.6,
+            #alpha=0.6,
             zorder=2
         )
         ax.text(
