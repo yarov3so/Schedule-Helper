@@ -199,6 +199,22 @@ def validate(reqs,sched):
         st.error(f"The following periods end before they start: {badperiods_str}. Please correct their start/end times before continuing.")
         st.stop()
 
+    badperiods_=[]
+    for i in range(len(sched)):
+        try:
+            if sched[i]["start"]!=None and sched[i]["end"]!=None and sched[i]["length"]!=None:
+                if timesum(sched[i]["start"],(0,sched[i]["length"]))!=sched[i]["end"]:
+                    badperiods_.append(sched[i]["name"]
+        except:
+            continue
+    if len(badperiods)!=0:
+        badperiods_str_=""
+        for bp in badperiods_:
+            badperiods_str_+=(bp+", ")
+        badperiods_str_=badperiods_str_[:-2]
+        st.error(f"The following periods have inconsistent constraints: {badperiods_str_}. Please correct their start/end times and/or length before continuing. Note that you can also leave some constraints blank.")
+        st.stop()  
+
 
     # Logically fill blanks
     sched_test=fill_blanks(reqs,sched[:])
