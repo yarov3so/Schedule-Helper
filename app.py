@@ -342,11 +342,11 @@ edited_df_reqs = st.data_editor(
     width="stretch",
     hide_index=True,
     column_config={
-        "Total required time (minutes)": st.column_config.NumberColumn( #numbercolumn
-            "Total required time (minutes)",
-            min_value=0,
-            step=1
-        )
+        # "Total required time (minutes)": st.column_config.NumberColumn( #numbercolumn
+        #     "Total required time (minutes)",
+        #     min_value=0,
+        #     step=1
+        # )
     }
 )
 
