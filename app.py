@@ -553,7 +553,7 @@ for _, row in df_copy.iterrows():
             y=row["Type"],
             s=label, #row["Name"],
             va='center', ha='center', color='black',
-            bbox=dict(facecolor="white", alpha=0.5, edgecolor="none", boxstyle="round,pad=0.5"),
+            bbox=dict(facecolor="white", alpha=0.6, edgecolor="none", boxstyle="round,pad=0.5"),
             zorder=10
         )
 
