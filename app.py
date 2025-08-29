@@ -546,19 +546,22 @@ for _, row in df_copy.iterrows():
             color=color_dict[row["Type"]],
             edgecolor="black",
             alpha=0.6,
+            zorder=1
         )
         ax.text(
             x=row["Start"] + (row["End"] - row["Start"]) / 2,
             y=row["Type"],
             s=label, #row["Name"],
             va='center', ha='center', color='black',
-            bbox=dict(facecolor="white", alpha=0.3, edgecolor="none", boxstyle="round,pad=0.3")
+            bbox=dict(facecolor="white", alpha=0.3, edgecolor="none", boxstyle="round,pad=0.3"),
+            zorder=3
         )
 
 for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvspan(
         row["Start"], row["End"],
-        color="red", alpha=0.1  # semi-transparent red
+        color="red", alpha=0.1,  # semi-transparent red
+        zorder=2
     )
 for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
     ax.axvspan(
