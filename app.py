@@ -10,6 +10,7 @@ import textwrap
 import math
 from functools import reduce
 from matplotlib.colors import to_rgba
+import matplotlib.colors as mcolors
 
 def lighten_color(color, amount=0.5):
 
@@ -546,11 +547,18 @@ if type(schedule)==list:
     df.columns=["Name","Type","Start","Length (minutes)","End"]
     
     colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+    css_colors = [
+    "background-color: rgb({}, {}, {});".format(
+        *(int(v * 255) for v in mcolors.to_rgb(c))
+    )
+    for c in colors_list
+]
+
     types=sorted(list(set(df[(df["Type"]!="overlap") & (df["Type"]!="gap")]["Type"])))
     ntypes=len(types)
 
     for i in range(ntypes):
-        color_dict[types[i]]=colors_list[i%(len(colors_list))]
+        color_dict[types[i]]=css_colors[i%(len(css_colors))]
 
     df_copy=df.copy()
     
@@ -585,14 +593,12 @@ colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta"
 
 fig, ax = plt.subplots(figsize=(8, 4))
 
-# color_dict={}
+color_dict={}
+types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
+ntypes=len(types)
 
-# types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
-# ntypes=len(types)
-
-
-# for i in range(ntypes):
-#     color_dict[types[i]]=colors_list[i%(len(colors_list))]
+for i in range(ntypes):
+    color_dict[types[i]]=colors_list[i%(len(colors_list))]
 
 for _, row in df_copy.iterrows():
     
