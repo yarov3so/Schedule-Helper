@@ -367,6 +367,7 @@ edited_df_reqs = st.data_editor(
     }
 )
 
+edited_df_reqs["Type of period"]=edited_df_reqs["Type of period"].str.strip()
 
 if edited_df_reqs["Type of period"].astype(str).str.contains("overlap", case=False).any() \
    or edited_df_reqs["Type of period"].astype(str).str.contains("gap", case=False).any():
