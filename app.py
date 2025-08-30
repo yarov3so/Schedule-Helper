@@ -548,9 +548,11 @@ if type(schedule)==list:
     
     colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
     css_colors = [
-    "background-color: rgb({}, {}, {});".format(
-        *(int(v * 255) for v in mcolors.to_rgb(c))
-    )
+        "background-color: rgba({}, {}, {}, {:.1f});".format(
+            *(int(v * 255) for v in mcolors.to_rgb(c)), 0.1
+        )
+        for c in colors_list
+    ]
     for c in colors_list
 ]
 
