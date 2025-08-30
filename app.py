@@ -532,7 +532,7 @@ def highlight_row_condition(row):
         elif row['Type'] == "overlap":
             return ['background-color: rgba(255, 0, 0, 0.1)'] * len(row)
         else:
-            return [color_dict[row["Type"]] * len(row) # 
+            return [color_dict[row["Type"]]] * len(row) # 
 
 if type(schedule)==list:
     df=pd.DataFrame(schedule)
