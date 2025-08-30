@@ -523,14 +523,16 @@ for i in range(df_todict_len):
 
 schedule=validate(reqs,df.to_dict(orient="records"))
 
+color_dict={}
+
 def highlight_row_condition(row):
-    
+        
         if row['Type'] == "gap":
             return ['background-color: rgba(0, 0, 255, 0.1)'] * len(row)
         elif row['Type'] == "overlap":
             return ['background-color: rgba(255, 0, 0, 0.1)'] * len(row)
         else:
-            return [''] * len(row) # 
+            return [color_dict[row["Type"]] * len(row) # 
 
 if type(schedule)==list:
     df=pd.DataFrame(schedule)
@@ -543,12 +545,20 @@ if type(schedule)==list:
     
     df.columns=["Name","Type","Start","Length (minutes)","End"]
     
+    colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+    types=sorted(list(set(df[(df["Type"]!="overlap") & (df["Type"]!="gap")]["Type"])))
+    ntypes=len(types)
+
+    for i in range(ntypes):
+        color_dict[types[i]]=colors_list[i%(len(colors_list))]
+
     df_copy=df.copy()
     
     df=df.style.apply(highlight_row_condition, axis=1)
     st.dataframe(df,hide_index=True)
     
-
+else:
+    st.stop()
 
 
 plt.rcParams["font.family"] = "DejaVu Sans"
@@ -558,9 +568,9 @@ df_copy["Start"] = pd.to_datetime(df_copy["Start"], format="%H:%M")
 df_copy["End"] = pd.to_datetime(df_copy["End"], format="%H:%M")
 
 #colors_list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#bcbd22","#17becf", "#e377c2", "#8c564b", "#7f7f7f", "#aec7e8"]
-colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
-alpha = 0.6
-colors_list = [to_rgba(c, alpha=alpha) for c in colors_list]
+# colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
+# alpha = 0.6
+# colors_list = [to_rgba(c, alpha=alpha) for c in colors_list]
 
 colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta", "lime", "teal", "violet"]
 # whiteness_factor = 0.6  # 0 = original color, 1 = full white
@@ -575,14 +585,14 @@ colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta"
 
 fig, ax = plt.subplots(figsize=(8, 4))
 
-color_dict={}
+# color_dict={}
 
-types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
-ntypes=len(types)
+# types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
+# ntypes=len(types)
 
 
-for i in range(ntypes):
-    color_dict[types[i]]=colors_list[i%(len(colors_list))]
+# for i in range(ntypes):
+#     color_dict[types[i]]=colors_list[i%(len(colors_list))]
 
 for _, row in df_copy.iterrows():
     
