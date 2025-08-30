@@ -553,8 +553,6 @@ if type(schedule)==list:
         )
         for c in colors_list
     ]
-    for c in colors_list
-]
 
     types=sorted(list(set(df[(df["Type"]!="overlap") & (df["Type"]!="gap")]["Type"])))
     ntypes=len(types)
