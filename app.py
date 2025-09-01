@@ -642,7 +642,9 @@ for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
 
 #offset=-0.9
 
-if len(set(df_copy["Type"])-{"overlap","gap"})<=2:
+if len(set(df_copy["Type"])-{"overlap","gap"})==1:
+    offset=-0.5
+elif len(set(df_copy["Type"])-{"overlap","gap"})==2:
     offset=-0.6
 elif len(set(df_copy["Type"])-{"overlap","gap"})<=4 and len(set(df_copy["Type"])-{"overlap","gap"})>=3:
     offset=-0.7
