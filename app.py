@@ -646,9 +646,9 @@ for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     ax.axvline(row["End"], color="red", linestyle="--", linewidth=1.5)
 
 
-    ax.text(row["Start"], -0.6, row["Start"].strftime("%H:%M"),
+    ax.text(row["Start"], -0.8, row["Start"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=9, zorder=11)
-    ax.text(row["End"], -0.6, row["End"].strftime("%H:%M"),
+    ax.text(row["End"], -0.8, row["End"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="red", fontsize=9, zorder=11)
 
 for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
@@ -656,9 +656,9 @@ for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
     ax.axvline(row["Start"], color="blue", linestyle="--", linewidth=1.5)
     ax.axvline(row["End"], color="blue", linestyle="--", linewidth=1.5)
 
-    ax.text(row["Start"], -0.6, row["Start"].strftime("%H:%M"),
+    ax.text(row["Start"], -0.8, row["Start"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="blue", fontsize=9,zorder=11)
-    ax.text(row["End"], -0.6, row["End"].strftime("%H:%M"),
+    ax.text(row["End"], -0.8, row["End"].strftime("%H:%M"),
             rotation=90, va="bottom", ha="center", color="blue", fontsize=9, zorder=11)
 
 
