@@ -592,7 +592,7 @@ colors_list = ["skyblue", "orange", "green", "purple", "gold", "cyan", "magenta"
 
 #color_cycle = itertools.cycle(colors_list)
 
-fig, ax = plt.subplots(figsize=(8, 4))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 color_dict={}
 types=sorted(list(set(df_copy[(df_copy["Type"]!="overlap") & (df_copy["Type"]!="gap")]["Type"])))
