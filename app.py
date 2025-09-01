@@ -640,22 +640,7 @@ for _, row in df_copy[df_copy["Type"] == "gap"].iterrows():
         color="blue", alpha=0.1  # semi-transparent red
     )
 
-if len(set(df_copy["Type"])-{"overlap"}-{"gap"})==1:
-    offset=-0.2
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==2:
-    offset=-0.4
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==3:
-    offset=-0.5
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==4:
-    offset=-0.6
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==5:
-    offset=-0.7
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==6:
-    offset=-0.8
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})==7:
-    offset=-0.9
-elif len(set(df_copy["Type"])-{"overlap"}-{"gap"})>=9:
-    offset=-1
+offset=-0.9
 
 for _, row in df_copy[df_copy["Type"] == "overlap"].iterrows():
     # Vertical red lines at start and end
