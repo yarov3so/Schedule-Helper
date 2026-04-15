@@ -492,9 +492,8 @@ df["End"]=df["End"].apply(comprehend)
 #df["Length (minutes)"]=df["Length (minutes)"].apply(try_int)
 
 
-st.dataframe(df[["Start","Length (minutes)","End"]])
-
 for idx in df[["Start","Length (minutes)","End"]].index: #df[["Start","Length (minutes)","End"]].loc[idx].isnull().all() or (
+    st.markdown(df[["Start","Length (minutes)","End"]].loc[idx])
     if df[["Start","Length (minutes)","End"]].loc[idx][0]==None and df[["Start","Length (minutes)","End"]].loc[idx][2]==None :
         st.warning("Please ensure that you have correctly specified at least one of the following for each period (row): Start, End.")
         st.stop()
